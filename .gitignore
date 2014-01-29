@@ -1,7 +1,2 @@
-*.sln
-*.userprefs
-*.csproj
-*.pidb
-.DS_Store
 Library
 Temp
