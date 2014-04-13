@@ -3,3 +3,9 @@ Temp
 .metadata
 .settings
 bin
+*aux
+*bbl
+*out
+*~
+*syctex.gz
+*blg
