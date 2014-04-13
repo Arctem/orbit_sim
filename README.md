@@ -9,3 +9,7 @@ The proposal for this project is available [here](https://docs.google.com/docume
 ###[Planets](Planets)
 
 This is the original prototype for the project. It is done in Unity and is very barebones.
+
+###[OrbitSim](Prototypes/OrbitSim)
+
+This is the current working model and eventually final product. It is in Java using Graphics2D.
