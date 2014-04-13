@@ -44,15 +44,15 @@ public class Renderer extends Canvas {
 		this.setSize(800, 600);
 		this.window.add(this);
 		this.window.setFocusable(true);
-		this.window.setResizable(false);
+		this.window.setResizable(true);
 		this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.window.pack();
 		this.window.setVisible(true);
-
 	}
 
 	public void paint(Graphics screen) {
-		screen.drawRect(20, 20, 300, 200);
+		screen.drawRect(this.getSize().width / 4, this.getSize().height / 4,
+				this.getSize().width / 2, this.getSize().height / 2);
 	}
 
 	public void render() {
