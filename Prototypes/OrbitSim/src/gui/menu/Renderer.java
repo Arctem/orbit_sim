@@ -8,6 +8,7 @@ import gui.GUIObject;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -18,7 +19,6 @@ import javax.swing.JFrame;
  */
 public class Renderer extends Canvas {
 
-	private Graphics2D g;
 	private ArrayList<GUIObject> guiObjects;
 	private JFrame window;
 
@@ -51,8 +51,14 @@ public class Renderer extends Canvas {
 	}
 
 	public void paint(Graphics screen) {
-		screen.drawRect(this.getSize().width / 4, this.getSize().height / 4,
+		BufferedImage buffer = new BufferedImage(this.getSize().width,
+				this.getSize().height, BufferedImage.TYPE_3BYTE_BGR);
+		Graphics2D g = buffer.createGraphics();
+
+		g.drawRect(this.getSize().width / 4, this.getSize().height / 4,
 				this.getSize().width / 2, this.getSize().height / 2);
+
+		screen.drawImage(buffer, 0, 0, null);
 	}
 
 	public void render() {
