@@ -14,26 +14,49 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+
 /**
  * @author russell
  * 
  */
 public class Renderer extends Canvas {
 
+	public static final boolean LWJGL = true;
+
 	public static final int MENU_SIZE = 300;
 	private ArrayList<GUIObject> guiObjects;
 	private JFrame window;
 
 	public static void main(String args[]) {
-		Renderer rend = new Renderer();
-		while (rend.getWindow().isEnabled()) {
-			// rend.render();
-			rend.repaint();
-
+		if (LWJGL) {
 			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
+				Display.setDisplayMode(new DisplayMode(800, 500));
+				Display.create();
+			
+			} catch (LWJGLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			while(!Display.isCloseRequested()) {
+				//Render stuff.
+				
+				Display.update();
+			}
+		} else {
+
+			Renderer rend = new Renderer();
+			while (rend.getWindow().isEnabled()) {
+				// rend.render();
+				rend.repaint();
+
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -69,9 +92,8 @@ public class Renderer extends Canvas {
 		gMain.setColor(Color.green);
 		gMain.fillRect(200, 200, 500, 500);
 
-		
-		gMenu.setColor(new Color(0, 0,
-				(int) Math.abs((System.currentTimeMillis() / 10) % 255), 150));
+		gMenu.setColor(new Color(0, 0, (int) Math.abs((System
+				.currentTimeMillis() / 10) % 255), 150));
 		gMenu.fillRect(0, 0, MENU_SIZE, this.getSize().height);
 
 		g.drawImage(mainScreenBuffer, 0, 0, null);
