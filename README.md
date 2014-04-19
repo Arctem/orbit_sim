@@ -13,3 +13,7 @@ This is the original prototype for the project. It is done in Unity and is very 
 ###[OrbitSim](Prototypes/OrbitSim)
 
 This is the current working model and eventually final product. It is in Java using Graphics2D.
+
+###[LWJGL]
+
+Setup instructions are here: http://www.lwjgl.org/wiki/index.php?title=Setting_Up_LWJGL_with_Eclipse
