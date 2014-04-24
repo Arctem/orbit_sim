@@ -24,7 +24,7 @@ public class Planet extends ObjectInSpace {
 	 * @param position
 	 * @param color
 	 */
-	public Planet(int mass, int radius, int density, int velocity,
+	public Planet(long mass, long radius, long density, long velocity,
 			Point3D position, Color color, boolean habitable, Sun sun) {
 		super(mass, radius, density, velocity, position, color, sun);
 		this.habitable = habitable;
@@ -40,9 +40,9 @@ public class Planet extends ObjectInSpace {
 	 * @param color
 	 * @param sunMass
 	 */
-	public Planet(int mass, int radius, int density, 
+	public Planet(long mass, long radius, long density, 
 			Color color, Sun sun){
-		super(mass, radius, density, (int)Math.sqrt((6.67 * Math.pow(10, (-11)) * sun.getMass())/(double)radius), 
+		super(mass, radius, density, (long)Math.sqrt((6.67 * Math.pow(10, (-11)) * sun.getMass())/(double)radius), 
 				new Point3D(radius, 0, 0), color, sun);
 	}
 	
@@ -55,10 +55,10 @@ public class Planet extends ObjectInSpace {
 	 * @param sunMass
 	 * @param velocity
 	 */
-	public Planet(int mass, int density, 
-			Color color, Sun sun, int velocity){
-		super(mass, (int)((6.67 * Math.pow(10, (-11)) * sun.getMass())/Math.pow(velocity, 2)), density, velocity, 
-				new Point3D((int)((6.67 * Math.pow(10, (-11)) * sun.getMass())/Math.pow(velocity, 2)), 0, 0), color, sun);
+	public Planet(long mass, long density, 
+			Color color, Sun sun, long velocity){
+		super(mass, (long)((6.67 * Math.pow(10, (-11)) * sun.getMass())/Math.pow(velocity, 2)), density, velocity, 
+				new Point3D((long)((6.67 * Math.pow(10, (-11)) * sun.getMass())/Math.pow(velocity, 2)), 0, 0), color, sun);
 	}
 
 
@@ -81,9 +81,9 @@ public class Planet extends ObjectInSpace {
 	 * sets the radius, and what velocity is needed to orbit at that radius.
 	 * @param radius
 	 */
-	public void setRadius(int radius){
+	public void setRadius(long radius){
 		super.setRadius(radius);
-		super.setVelocity((int)Math.sqrt((double)(getRadius() * Math.pow(getVelocity(), 2)/(double)radius)));
+		super.setVelocity((long)Math.sqrt((double)(getRadius() * Math.pow(getVelocity(), 2)/(double)radius)));
 		setPeriod();
 	}
 
@@ -91,9 +91,15 @@ public class Planet extends ObjectInSpace {
 	 * sets the velocity, and what radius is needed for that velocity to orbit
 	 * @param velocity
 	 */
-	public void setVelocity(int velocity){
+	public void setVelocity(long velocity){
 		super.setVelocity(velocity);
-		super.setRadius((int)((double)(getRadius() * Math.pow(getVelocity(), 2))/Math.pow(velocity, 2)));
+		super.setRadius((long)((double)(getRadius() * Math.pow(getVelocity(), 2))/Math.pow(velocity, 2)));
 		setPeriod();
+	}
+
+	@Override
+	public void changeProperty(String propName, int value) {
+		// TODO Auto-generated method stub
+		
 	}
 }

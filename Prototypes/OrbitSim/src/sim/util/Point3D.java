@@ -8,15 +8,15 @@ package sim.util;
  * 
  */
 public class Point3D {
-	private int x, y, z;
+	private long x, y, z;
 
-	public Point3D(int x, int y, int z) {
+	public Point3D(long x, long y, long z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
-	public void add(int x, int y, int z) {
+	public void add(long x, long y, long z) {
 		this.x += x;
 		this.y += y;
 		this.z += z;
@@ -49,7 +49,7 @@ public class Point3D {
 	 * 
 	 * @param c the constant to multiply by.
 	 */
-	public void multiply(int c){
+	public void multiply(long c){
 		this.x *= c;
 		this.y *= c;
 		this.z *= c;
@@ -66,25 +66,25 @@ public class Point3D {
 	/**
 	 * @return the x
 	 */
-	public int getX() {
+	public long getX() {
 		return x;
 	}
 
 	/**
 	 * @return the y
 	 */
-	public int getY() {
+	public long getY() {
 		return y;
 	}
 
 	/**
 	 * @return the z
 	 */
-	public int getZ() {
+	public long getZ() {
 		return z;
 	}
 	
-	public void setXYZ(int x, int y, int z){
+	public void setXYZ(long x, long y, long z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
