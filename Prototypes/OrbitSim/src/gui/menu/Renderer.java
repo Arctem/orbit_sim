@@ -24,6 +24,8 @@ import org.lwjgl.util.glu.Sphere;
 
 import sim.SolarSystem;
 import sim.simobject.Planet;
+import sim.simobject.Sun;
+import sim.util.Point3D;
 
 /**
  * @author russell
@@ -66,34 +68,9 @@ public class Renderer extends Canvas {
 			// of the points that are farther away.
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
 
-			Planet p = new Planet(0, SolarSystem.ASTRONOMICAL_UNIT,
-					Color.GREEN, null, 0);
-
-			final class Point {
-
-				final float x;
-				final float y;
-				final float z;
-
-				public Point(float x, float y, float z) {
-					this.x = x;
-					this.y = y;
-					this.z = z;
-				}
-			}
-
-			Point[] points = new Point[1000];
-			Random random = new Random();
-			// Iterate of every array index
-			for (int i = 0; i < points.length; i++) {
-				// Set the point at the array index to
-				// x = random between -50 and +50
-				// y = random between -50 and +50
-				// z = random between 0 and -200
-				points[i] = new Point((random.nextFloat() - 0.5f) * 100f,
-						(random.nextFloat() - 0.5f) * 100f,
-						random.nextInt(200) - 200);
-			}
+			Sun sun = new Sun(0, 0, new Point3D(0, 0, 0), Color.YELLOW, 100);
+			Planet planet = new Planet(0, SolarSystem.ASTRONOMICAL_UNIT,
+					Color.GREEN, sun, 10);
 
 			while (!Display.isCloseRequested()) {
 				// Render stuff.
@@ -102,12 +79,11 @@ public class Renderer extends Canvas {
 
 				GL11.glTranslatef(0, 0, 0.05f);
 
-				GL11.glBegin(GL11.GL_POINTS);
-				for (Point p : points) {
-					// Draw the point at its coordinates
-					GL11.glVertex3f(p.x, p.y, p.z);
-				}
-				GL11.glEnd();
+				/*
+				 * GL11.glBegin(GL11.GL_POINTS); for (Point p : points) { //
+				 * Draw the point at its coordinates GL11.glVertex3f(p.x, p.y,
+				 * p.z); } GL11.glEnd();
+				 */
 
 				GL11.glBegin(GL11.GL_LINE_LOOP);
 				GL11.glVertex3f(-0.5f, -0.5f, -10f);
@@ -120,9 +96,9 @@ public class Renderer extends Canvas {
 				Renderer.renderSphere(0.5f, 0.0f, -5f, 0.4f);
 
 				GL11.glBegin(GL11.GL_TRIANGLES);
-				GL11.glVertex3f(-0.5f, -0.5f, 0f);
-				GL11.glVertex3f(-0.5f, 0.5f, 0f);
-				GL11.glVertex3f(0.5f, 0.5f, 1f);
+				GL11.glVertex3f(-0.5f, -0.5f, -6f);
+				GL11.glVertex3f(-0.5f, 0.5f, -5f);
+				GL11.glVertex3f(0.5f, 0.5f, -4f);
 				GL11.glEnd();
 
 				Display.update();
