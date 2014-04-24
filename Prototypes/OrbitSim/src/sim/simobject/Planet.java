@@ -15,6 +15,7 @@ public class Planet extends ObjectInSpace {
 	
 	private boolean habitable;
 	private double period;
+	private int orbitRadius;
 
 	/**
 	 * @param mass
