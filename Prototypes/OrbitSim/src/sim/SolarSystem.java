@@ -14,10 +14,12 @@ import sim.simobject.SimObject;
  * 
  */
 public class SolarSystem {
+	
+	public static final long ASTRONOMICAL_UNIT = 149600000;
 
 	private ArrayList<SimObject> simObjects;
 	private MainMenu mainMenu;
-	private int timeScale;
+	private long timeScale;
 
 	/**
 	 * @param simObjects
@@ -76,7 +78,7 @@ public class SolarSystem {
 	/**
 	 * @return the timeScale
 	 */
-	public int getTimeScale() {
+	public long getTimeScale() {
 		return timeScale;
 	}
 
@@ -84,7 +86,7 @@ public class SolarSystem {
 	 * @param timeScale
 	 *            the timeScale to set
 	 */
-	public void setTimeScale(int timeScale) {
+	public void setTimeScale(long timeScale) {
 		this.timeScale = timeScale;
 	}
 
