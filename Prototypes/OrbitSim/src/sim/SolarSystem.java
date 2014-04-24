@@ -7,6 +7,7 @@ import gui.menu.MainMenu;
 
 import java.util.ArrayList;
 
+import sim.simobject.ObjectInSpace;
 import sim.simobject.SimObject;
 
 /**
@@ -15,7 +16,7 @@ import sim.simobject.SimObject;
  */
 public class SolarSystem {
 
-	private ArrayList<SimObject> simObjects;
+	private ArrayList<ObjectInSpace> simObjects;
 	private MainMenu mainMenu;
 	private int timeScale;
 
@@ -23,13 +24,13 @@ public class SolarSystem {
 	 * @param simObjects
 	 * @param mainMenu
 	 */
-	public SolarSystem(ArrayList<SimObject> simObjects, MainMenu mainMenu) {
+	public SolarSystem(ArrayList<ObjectInSpace> simObjects, MainMenu mainMenu) {
 		this.simObjects = simObjects;
 		this.mainMenu = mainMenu;
 	}
 
 	public void step() {
-		for (SimObject o : simObjects) {
+		for (ObjectInSpace o : simObjects) {
 			o.step();
 		}
 	}
