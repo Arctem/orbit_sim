@@ -24,9 +24,8 @@ public class Sun extends ObjectInSpace {
 	 * @param color
 	 * @param brightness
 	 */
-	public Sun(int mass, int radius, int density, int velocity,
-			Point3D position, Color color, int brightness) {
-		super(mass, radius, density, velocity, position, color);
+	public Sun(int mass, int density, Point3D position, Color color, int brightness) {
+		super(mass, 0, density, 0, position, color, null);
 		this.brightness = brightness;
 	}
 
