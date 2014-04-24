@@ -15,7 +15,7 @@ import sim.util.Point3D;
  * 
  */
 public abstract class ObjectInSpace implements SimObject, GUIObject {
-	private int mass, radius, density, velocity;
+	private long mass, radius, density, velocity;
 	private Sun sun;
 	private Point3D position;
 	private Color color;
@@ -28,7 +28,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	 * @param position
 	 * @param color
 	 */
-	public ObjectInSpace(int mass, int radius, int density, int velocity,
+	public ObjectInSpace(long mass, long radius, long density, long velocity,
 			Point3D position, Color color, Sun sun) {
 		super();
 		this.mass = mass;
@@ -56,21 +56,21 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 
 	}
 
-	public void changeProperty(String propName, int value) {
+	public void changeProperty(String propName, long value) {
 
 	}
 
 	/**
 	 * @return the mass
 	 */
-	public int getMass() {
+	public long getMass() {
 		return mass;
 	}
 
 	/**
 	 * @return the radius
 	 */
-	public int getRadius() {
+	public long getRadius() {
 		return radius;
 	}
 	
@@ -78,14 +78,14 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	 * sets the radius
 	 * @param radius
 	 */
-	public void setRadius(int radius){
+	public void setRadius(long radius){
 		this.radius = radius;
 	}
 
 	/**
 	 * @return the density
 	 */
-	public int getDensity() {
+	public long getDensity() {
 		return density;
 	}
 	
@@ -93,14 +93,14 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	 * sets the velocity
 	 * @param velocity
 	 */
-	public void setVelocity(int velocity){
+	public void setVelocity(long velocity){
 		this.velocity = velocity;
 	}
 
 	/**
 	 * @return the velocity
 	 */
-	public int getVelocity() {
+	public long getVelocity() {
 		return velocity;
 	}
 
@@ -126,7 +126,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		this.sun = sun;
 	}
 
-	public void setMass(int mass) {
+	public void setMass(long mass) {
 		this.mass = mass;
 	}
 
@@ -134,7 +134,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		this.position = position;
 	}
 	
-	public void setPosition(int x, int y, int z){
+	public void setPosition(long x, long y, long z){
 		this.position.setXYZ(x, y, z);
 	}
 

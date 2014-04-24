@@ -14,7 +14,7 @@ import sim.util.Point3D;
  */
 public class Rocket extends ObjectInSpace {
 
-	private int maxFuel, currentFuel, power;
+	private long maxFuel, currentFuel, power;
 
 	private SimObject source, destination;
 
@@ -31,9 +31,9 @@ public class Rocket extends ObjectInSpace {
 	 * @param source
 	 * @param destination
 	 */
-	public Rocket(int mass, int radius, int density, int velocity,
-			Point3D position, Color color, int maxFuel, int currentFuel,
-			int power, SimObject source, SimObject destination, Sun sun) {
+	public Rocket(long mass, long radius, long density, long velocity,
+			Point3D position, Color color, long maxFuel, long currentFuel,
+			long power, SimObject source, SimObject destination, Sun sun) {
 		super(mass, radius, density, velocity, position, color, sun);
 		this.maxFuel = maxFuel;
 		this.currentFuel = currentFuel;
@@ -43,6 +43,12 @@ public class Rocket extends ObjectInSpace {
 	}
 	
 	public void render(Graphics2D g) {
+		
+	}
+
+	@Override
+	public void changeProperty(String propName, int value) {
+		// TODO Auto-generated method stub
 		
 	}
 
