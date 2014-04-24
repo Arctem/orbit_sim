@@ -22,6 +22,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
 
+import sim.SolarSystem;
+import sim.simobject.Planet;
+
 /**
  * @author russell
  * 
@@ -62,6 +65,9 @@ public class Renderer extends Canvas {
 			// To make sure the points closest to the camera are shown in front
 			// of the points that are farther away.
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
+
+			Planet p = new Planet(0, SolarSystem.ASTRONOMICAL_UNIT,
+					Color.GREEN, null, 0);
 
 			final class Point {
 
@@ -141,11 +147,11 @@ public class Renderer extends Canvas {
 	}
 
 	private static void renderSphere(float x, float y, float z, float radius) {
-	     GL11.glPushMatrix();
-	     GL11.glTranslatef(x, y, z);
-	     Sphere s = new Sphere();
-	     s.draw(radius, 16, 16);
-	     GL11.glPopMatrix();
+		GL11.glPushMatrix();
+		GL11.glTranslatef(x, y, z);
+		Sphere s = new Sphere();
+		s.draw(radius, 16, 16);
+		GL11.glPopMatrix();
 	}
 
 	/**
