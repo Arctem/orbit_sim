@@ -11,12 +11,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.glu.GLU;
+
+import sim.util.Point3D;
 
 /**
  * @author russell
@@ -34,17 +39,89 @@ public class Renderer extends Canvas {
 		if (LWJGL) {
 			try {
 				Display.setDisplayMode(new DisplayMode(800, 500));
+				Display.setTitle("Orbit Simulator");
 				Display.create();
-			
+
 			} catch (LWJGLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			while(!Display.isCloseRequested()) {
-				//Render stuff.
-				
-				Display.update();
+
+			/** The minimal distance from the camera where objects are rendered. */
+			float zNear = 0.3f;
+			/** The maximal distance from the camera where objects are rendered. */
+			float zFar = 20f;
+			/** Defines the field of view. */
+			int fov = 68;
+
+			GL11.glMatrixMode(GL11.GL_PROJECTION);
+			GL11.glLoadIdentity();
+			GLU.gluPerspective(fov, (float) Display.getWidth()
+					/ (float) Display.getHeight(), zNear, zFar);
+			GL11.glMatrixMode(GL11.GL_MODELVIEW);
+			GL11.glLoadIdentity();
+
+			// To make sure the points closest to the camera are shown in front
+			// of the points that are farther away.
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+
+			final class Point {
+
+				final float x;
+				final float y;
+				final float z;
+
+				public Point(float x, float y, float z) {
+					this.x = x;
+					this.y = y;
+					this.z = z;
+				}
 			}
+
+			Point[] points = new Point[1000];
+			Random random = new Random();
+			// Iterate of every array index
+			for (int i = 0; i < points.length; i++) {
+				// Set the point at the array index to
+				// x = random between -50 and +50
+				// y = random between -50 and +50
+				// z = random between 0 and -200
+				points[i] = new Point((random.nextFloat() - 0.5f) * 100f,
+						(random.nextFloat() - 0.5f) * 100f,
+						random.nextInt(200) - 200);
+			}
+
+			while (!Display.isCloseRequested()) {
+				// Render stuff.
+				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT
+						| GL11.GL_DEPTH_BUFFER_BIT);
+
+				GL11.glTranslatef(0, 0, 0.01f);
+
+				GL11.glBegin(GL11.GL_POINTS);
+				for (Point p : points) {
+					// Draw the point at its coordinates
+					GL11.glVertex3f(p.x, p.y, p.z);
+				}
+				GL11.glEnd();
+
+				GL11.glBegin(GL11.GL_LINE_LOOP);
+				GL11.glVertex3f(-0.5f, -0.5f, 0f);
+				GL11.glVertex3f(-0.5f, 0.5f, 0f);
+				GL11.glVertex3f(0.5f, 0.5f, 0f);
+				GL11.glVertex3f(0.5f, -0.5f, 0f);
+				GL11.glEnd();
+
+				GL11.glBegin(GL11.GL_TRIANGLES);
+				GL11.glVertex3f(-0.5f, -0.5f, 0f);
+				GL11.glVertex3f(-0.5f, 0.5f, 0f);
+				GL11.glVertex3f(0.5f, 0.5f, 1f);
+				GL11.glEnd();
+
+				Display.update();
+				Display.sync(60);
+			}
+
+			Display.destroy();
 		} else {
 
 			Renderer rend = new Renderer();
