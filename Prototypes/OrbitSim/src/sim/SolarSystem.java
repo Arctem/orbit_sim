@@ -14,6 +14,8 @@ import sim.simobject.SimObject;
  * 
  */
 public class SolarSystem {
+	
+	public static final long ASTRONOMICAL_UNIT = 149600000;
 
 	private ArrayList<SimObject> simObjects;
 	private MainMenu mainMenu;
