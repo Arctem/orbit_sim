@@ -33,8 +33,8 @@ public class Rocket extends ObjectInSpace {
 	 */
 	public Rocket(int mass, int radius, int density, int velocity,
 			Point3D position, Color color, int maxFuel, int currentFuel,
-			int power, SimObject source, SimObject destination) {
-		super(mass, radius, density, velocity, position, color);
+			int power, SimObject source, SimObject destination, Sun sun) {
+		super(mass, radius, density, velocity, position, color, sun);
 		this.maxFuel = maxFuel;
 		this.currentFuel = currentFuel;
 		this.power = power;
