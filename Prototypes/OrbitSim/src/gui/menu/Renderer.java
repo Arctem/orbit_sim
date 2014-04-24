@@ -20,8 +20,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
-
-import sim.util.Point3D;
+import org.lwjgl.util.glu.Sphere;
 
 /**
  * @author russell
@@ -38,7 +37,7 @@ public class Renderer extends Canvas {
 	public static void main(String args[]) {
 		if (LWJGL) {
 			try {
-				Display.setDisplayMode(new DisplayMode(800, 500));
+				Display.setDisplayMode(new DisplayMode(800, 600));
 				Display.setTitle("Orbit Simulator");
 				Display.create();
 
@@ -49,7 +48,7 @@ public class Renderer extends Canvas {
 			/** The minimal distance from the camera where objects are rendered. */
 			float zNear = 0.3f;
 			/** The maximal distance from the camera where objects are rendered. */
-			float zFar = 20f;
+			float zFar = 20000f;
 			/** Defines the field of view. */
 			int fov = 68;
 
@@ -95,7 +94,7 @@ public class Renderer extends Canvas {
 				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT
 						| GL11.GL_DEPTH_BUFFER_BIT);
 
-				GL11.glTranslatef(0, 0, 0.01f);
+				GL11.glTranslatef(0, 0, 0.05f);
 
 				GL11.glBegin(GL11.GL_POINTS);
 				for (Point p : points) {
@@ -105,11 +104,14 @@ public class Renderer extends Canvas {
 				GL11.glEnd();
 
 				GL11.glBegin(GL11.GL_LINE_LOOP);
-				GL11.glVertex3f(-0.5f, -0.5f, 0f);
-				GL11.glVertex3f(-0.5f, 0.5f, 0f);
-				GL11.glVertex3f(0.5f, 0.5f, 0f);
-				GL11.glVertex3f(0.5f, -0.5f, 0f);
+				GL11.glVertex3f(-0.5f, -0.5f, -10f);
+				GL11.glVertex3f(-0.5f, 0.5f, -10f);
+				GL11.glVertex3f(0.5f, 0.5f, -10f);
+				GL11.glVertex3f(0.5f, -0.5f, -10f);
 				GL11.glEnd();
+
+				Renderer.renderSphere(-0.5f, 0.0f, -5f, 0.4f);
+				Renderer.renderSphere(0.5f, 0.0f, -5f, 0.4f);
 
 				GL11.glBegin(GL11.GL_TRIANGLES);
 				GL11.glVertex3f(-0.5f, -0.5f, 0f);
@@ -136,6 +138,14 @@ public class Renderer extends Canvas {
 				}
 			}
 		}
+	}
+
+	private static void renderSphere(float x, float y, float z, float radius) {
+	     GL11.glPushMatrix();
+	     GL11.glTranslatef(x, y, z);
+	     Sphere s = new Sphere();
+	     s.draw(radius, 16, 16);
+	     GL11.glPopMatrix();
 	}
 
 	/**
