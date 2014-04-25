@@ -33,8 +33,9 @@ import sim.util.Point3D;
  * 
  */
 public class Renderer extends Canvas {
-
-	public static final boolean LWJGL = true;
+	private static final float RENDER_SCALE = 0.000005f;
+	private static final float SUN_SIZE = 30f;
+	private static final float PLANET_SIZE = 20f;
 
 	public static final int MENU_SIZE = 300;
 	private ArrayList<GUIObject> guiObjects;
@@ -46,17 +47,18 @@ public class Renderer extends Canvas {
 	public static void main(String args[]) {
 		Renderer.initGL();
 		Sun sun = new Sun(0, 0, new Point3D(0, 0, 0), Color.YELLOW, 100);
-		Planet planet = new Planet(0, SolarSystem.ASTRONOMICAL_UNIT,
-				Color.GREEN, sun, 10);
+		Planet planet = new Planet(0, SolarSystem.ASTRONOMICAL_UNIT, 5,
+				Color.GREEN, sun);
 
-		GL11.glTranslatef(0, 0, 3f);
+		GL11.glTranslatef(0, 0, -200f);
+		GL11.glRotated(20f, 1f, 0, 0);
 
 		while (!Display.isCloseRequested()) {
 			// Render stuff.
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
 			// GL11.glTranslatef(0, 0, 0.05f);
-			GL11.glRotatef(0.5f, 1f, 0f, 0f);
+			GL11.glRotatef(0.2f, 0f, 1f, 0f);
 
 			/*
 			 * GL11.glBegin(GL11.GL_POINTS); for (Point p : points) { // Draw
@@ -64,21 +66,24 @@ public class Renderer extends Canvas {
 			 * GL11.glEnd();
 			 */
 
-			GL11.glBegin(GL11.GL_LINE_LOOP);
-			GL11.glVertex3f(-0.5f, -0.5f, -10f);
-			GL11.glVertex3f(-0.5f, 0.5f, -10f);
-			GL11.glVertex3f(0.5f, 0.5f, -10f);
-			GL11.glVertex3f(0.5f, -0.5f, -10f);
-			GL11.glEnd();
+			Renderer.setColor(sun.getColor());
+			Renderer.renderSphere(sun.getPosition(), SUN_SIZE, RENDER_SCALE);
+			Renderer.setColor(planet.getColor());
+			Renderer.renderSphere(planet.getPosition(), PLANET_SIZE,
+					RENDER_SCALE);
 
-			Renderer.renderSphere(-0.5f, 0.0f, -5f, 0.4f);
-			Renderer.renderSphere(0.5f, 0.0f, -5f, 0.4f);
-
-			GL11.glBegin(GL11.GL_TRIANGLES);
-			GL11.glVertex3f(-0.5f, -0.5f, -6f);
-			GL11.glVertex3f(-0.5f, 0.5f, -5f);
-			GL11.glVertex3f(0.5f, 0.5f, -4f);
-			GL11.glEnd();
+			/*
+			 * GL11.glBegin(GL11.GL_LINE_LOOP); GL11.glVertex3f(-0.5f, -0.5f,
+			 * -10f); GL11.glVertex3f(-0.5f, 0.5f, -10f); GL11.glVertex3f(0.5f,
+			 * 0.5f, -10f); GL11.glVertex3f(0.5f, -0.5f, -10f); GL11.glEnd();
+			 * 
+			 * Renderer.renderSphere(-0.5f, 0.0f, -5f, 0.4f);
+			 * Renderer.renderSphere(0.5f, 0.0f, -5f, 0.4f);
+			 * 
+			 * GL11.glBegin(GL11.GL_TRIANGLES); GL11.glVertex3f(-0.5f, -0.5f,
+			 * -6f); GL11.glVertex3f(-0.5f, 0.5f, -5f); GL11.glVertex3f(0.5f,
+			 * 0.5f, -4f); GL11.glEnd();
+			 */
 
 			Display.update();
 			Display.sync(60);
@@ -160,6 +165,11 @@ public class Renderer extends Canvas {
 			float scalar) {
 		Renderer.renderSphere(position.getX() * scalar, position.getY()
 				* scalar, position.getZ() * scalar, radius);
+	}
+
+	private static void setColor(Color color) {
+		GL11.glColor3f(color.getRed() / (float) 255, color.getGreen()
+				/ (float) 255, color.getBlue() / (float) 255);
 	}
 
 	public void update(Graphics g) {
