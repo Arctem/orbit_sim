@@ -41,6 +41,10 @@ public class Renderer {
 	public static final int MENU_SIZE = 300;
 	private ArrayList<GUIObject> guiObjects;
 
+	private static float zoomLevel, zoomGoal;
+	private static float xRotation;
+	private static float rotationRate = 0.2f;
+
 	// ----------- Variables added for Lighting Test -----------//
 	private static FloatBuffer matSpecular, lightPosition, whiteLight,
 			lModelAmbient;
@@ -51,15 +55,24 @@ public class Renderer {
 		Planet planet = new Planet(0, SolarSystem.ASTRONOMICAL_UNIT, 5,
 				Color.GREEN, sun);
 
-		GL11.glTranslatef(0, 0, -200f);
-		GL11.glRotated(20f, 1f, 0, 0);
+		zoomLevel = -200f;
+		zoomGoal = -200f;
+		xRotation = 0.0f;
 
 		while (!Display.isCloseRequested()) {
 			// Render stuff.
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-			// GL11.glTranslatef(0, 0, 0.05f);
-			GL11.glRotatef(0.2f, 0f, 1f, 0f);
+			zoomGoal += Mouse.getDWheel() * 0.1f;
+			zoomLevel = (zoomGoal + zoomLevel * 2) / 3;
+
+			if (Mouse.isButtonDown(1))
+				xRotation += Mouse.getDX() * 0.1f;
+
+			GL11.glLoadIdentity();
+			GL11.glTranslatef(0, 0, zoomLevel);
+			GL11.glRotatef(20f, 1f, 0, 0);
+			GL11.glRotatef(xRotation, 0f, 1f, 0f);
 
 			/*
 			 * GL11.glBegin(GL11.GL_POINTS); for (Point p : points) { // Draw
