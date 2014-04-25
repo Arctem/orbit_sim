@@ -50,14 +50,14 @@ public class Renderer {
 			lModelAmbient;
 
 	public static void main(String args[]) {
-		Renderer.initGL();
+		Renderer.initialize();
+		Renderer.startMainLoop();
+	}
+
+	public static void startMainLoop() {
 		Sun sun = new Sun(0, 0, new Point3D(0, 0, 0), Color.YELLOW, 100);
 		Planet planet = new Planet(0, SolarSystem.ASTRONOMICAL_UNIT, 5,
 				Color.GREEN, sun);
-
-		zoomLevel = -200f;
-		zoomGoal = -200f;
-		xRotation = 0.0f;
 
 		while (!Display.isCloseRequested()) {
 			// Render stuff.
@@ -93,6 +93,15 @@ public class Renderer {
 		Display.destroy();
 	}
 
+	public static void initialize() {
+		initGL();
+		initLighting();
+
+		zoomLevel = -200f;
+		zoomGoal = -200f;
+		xRotation = 0.0f;
+	}
+
 	private static void initGL() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1600, 1000));
@@ -121,8 +130,10 @@ public class Renderer {
 		// To make sure the points closest to the camera are shown in front
 		// of the points that are farther away.
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
+	}
 
-		Renderer.initLightArrays();
+	private static void initLighting() {
+		initLightArrays();
 		GL11.glShadeModel(GL11.GL_SMOOTH);
 		GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, matSpecular);
 		GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, 50.0f);
@@ -174,10 +185,6 @@ public class Renderer {
 	}
 
 	public static void render() {
-
-	}
-
-	public static void initialize() {
 
 	}
 
