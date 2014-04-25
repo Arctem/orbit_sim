@@ -33,7 +33,7 @@ import sim.util.Point3D;
  * @author russell
  * 
  */
-public class Renderer extends Canvas {
+public class Renderer {
 	private static final float RENDER_SCALE = 0.000005f;
 	private static final float SUN_SIZE = 30f;
 	private static final float PLANET_SIZE = 20f;
@@ -72,25 +72,6 @@ public class Renderer extends Canvas {
 			Renderer.setColor(planet.getColor());
 			Renderer.renderSphere(planet.getPosition(), PLANET_SIZE,
 					RENDER_SCALE);
-
-			if (Mouse.getDWheel() < 0) {
-				GL11.glTranslatef(0, 0, 1f);
-			} else if (Mouse.getDWheel() > 0) {
-				GL11.glTranslatef(0, 0, -1f);
-			}
-
-			/*
-			 * GL11.glBegin(GL11.GL_LINE_LOOP); GL11.glVertex3f(-0.5f, -0.5f,
-			 * -10f); GL11.glVertex3f(-0.5f, 0.5f, -10f); GL11.glVertex3f(0.5f,
-			 * 0.5f, -10f); GL11.glVertex3f(0.5f, -0.5f, -10f); GL11.glEnd();
-			 * 
-			 * Renderer.renderSphere(-0.5f, 0.0f, -5f, 0.4f);
-			 * Renderer.renderSphere(0.5f, 0.0f, -5f, 0.4f);
-			 * 
-			 * GL11.glBegin(GL11.GL_TRIANGLES); GL11.glVertex3f(-0.5f, -0.5f,
-			 * -6f); GL11.glVertex3f(-0.5f, 0.5f, -5f); GL11.glVertex3f(0.5f,
-			 * 0.5f, -4f); GL11.glEnd();
-			 */
 
 			Display.update();
 			Display.sync(60);
@@ -179,19 +160,15 @@ public class Renderer extends Canvas {
 				/ (float) 255, color.getBlue() / (float) 255);
 	}
 
-	public void update(Graphics g) {
-		paint(g);
-	}
-
-	public void render() {
+	public static void render() {
 
 	}
 
-	public void initialize() {
+	public static void initialize() {
 
 	}
 
-	public void stop() {
+	public static void stop() {
 
 	}
 
