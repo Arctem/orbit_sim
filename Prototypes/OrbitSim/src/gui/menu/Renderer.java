@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -71,6 +72,12 @@ public class Renderer extends Canvas {
 			Renderer.setColor(planet.getColor());
 			Renderer.renderSphere(planet.getPosition(), PLANET_SIZE,
 					RENDER_SCALE);
+
+			if (Mouse.getDWheel() < 0) {
+				GL11.glTranslatef(0, 0, 1f);
+			} else if (Mouse.getDWheel() > 0) {
+				GL11.glTranslatef(0, 0, -1f);
+			}
 
 			/*
 			 * GL11.glBegin(GL11.GL_LINE_LOOP); GL11.glVertex3f(-0.5f, -0.5f,
