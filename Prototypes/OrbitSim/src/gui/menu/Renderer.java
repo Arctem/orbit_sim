@@ -5,15 +5,9 @@ package gui.menu;
 
 import gui.GUIObject;
 
-import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -28,6 +22,9 @@ import sim.SolarSystem;
 import sim.simobject.Planet;
 import sim.simobject.Sun;
 import sim.util.Point3D;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.examples.LwjglInitHelper;
+import de.lessvoid.nifty.tools.TimeProvider;
 
 /**
  * @author russell
@@ -55,6 +52,9 @@ public class Renderer {
 	}
 
 	public static void startMainLoop() {
+		// Nifty nifty = new Nifty(new LwjglRenderDevice(), null,
+		//			LwjglInitHelper.getInputSystem(), new TimeProvider());
+
 		Sun sun = new Sun(0, 0, new Point3D(0, 0, 0), Color.YELLOW, 100);
 		Planet planet = new Planet(0, SolarSystem.ASTRONOMICAL_UNIT, 5,
 				Color.GREEN, sun);
