@@ -23,7 +23,9 @@ import sim.simobject.Planet;
 import sim.simobject.Sun;
 import sim.util.Point3D;
 import de.lessvoid.nifty.Nifty;
-import de.lessvoid.nifty.examples.LwjglInitHelper;
+import de.lessvoid.nifty.nulldevice.NullSoundDevice;
+import de.lessvoid.nifty.renderer.lwjgl.input.LwjglInputSystem;
+import de.lessvoid.nifty.renderer.lwjgl.render.LwjglRenderDevice;
 import de.lessvoid.nifty.tools.TimeProvider;
 
 /**
@@ -52,8 +54,15 @@ public class Renderer {
 	}
 
 	public static void startMainLoop() {
-		// Nifty nifty = new Nifty(new LwjglRenderDevice(), null,
-		//			LwjglInitHelper.getInputSystem(), new TimeProvider());
+		LwjglInputSystem inputSystem = new LwjglInputSystem();
+		try {
+			inputSystem.startup();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		Nifty nifty = new Nifty(new LwjglRenderDevice(), new NullSoundDevice(),
+				inputSystem, new TimeProvider());
 
 		Sun sun = new Sun(0, 0, new Point3D(0, 0, 0), Color.YELLOW, 100);
 		Planet planet = new Planet(0, SolarSystem.ASTRONOMICAL_UNIT, 5,
