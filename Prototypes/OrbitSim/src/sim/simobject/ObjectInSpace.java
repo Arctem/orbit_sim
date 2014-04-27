@@ -17,7 +17,7 @@ import sim.util.Point3D;
 public abstract class ObjectInSpace implements SimObject, GUIObject {
 	private long radius, density, velocity;
 	private double mass;
-	private Sun sun;
+	private ObjectInSpace sun;
 	private Point3D position;
 	private Color color;
 
@@ -30,7 +30,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	 * @param color
 	 */
 	public ObjectInSpace(double mass, long radius, long density, long velocity,
-			Point3D position, Color color, Sun sun) {
+			Point3D position, Color color, ObjectInSpace sun) {
 		super();
 		this.mass = mass;
 		this.radius = radius;
@@ -123,7 +123,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		return color;
 	}
 
-	public Sun getSun() {
+	public ObjectInSpace getSun() {
 		return sun;
 	}
 
@@ -135,10 +135,20 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		this.mass = mass;
 	}
 
+	/**
+	 * se the position of the object
+	 * @param position the position to set it to
+	 */
 	public void setPosition(Point3D position) {
 		this.position = position;
 	}
 	
+	/**
+	 * set the Cartesian position of the object
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @param z the z coordinate
+	 */
 	public void setPosition(long x, long y, long z){
 		this.position.setXYZ(x, y, z);
 	}

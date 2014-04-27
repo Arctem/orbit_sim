@@ -30,7 +30,7 @@ public class Planet extends ObjectInSpace {
 	 * @param color
 	 */
 	public Planet(double mass, long orbitRadius, long density, long velocity,
-			Point3D position, Color color, boolean habitable, Sun sun, long radius) {
+			Point3D position, Color color, boolean habitable, ObjectInSpace sun, long radius) {
 		super(mass, radius, density, velocity, position, color, sun);
 		this.orbitRadius = 0;
 		this.habitable = habitable;
@@ -51,7 +51,7 @@ public class Planet extends ObjectInSpace {
 	 * @param sunMass
 	 */
 	public Planet(double mass, long orbitRadius, long density, Color color,
-			Sun sun, long radius) {
+			ObjectInSpace sun, long radius) {
 		super(mass, radius, density, (long) Math
 				.sqrt((6.67 * Math.pow(10, (-11)) * sun.getMass())
 						/ (double) orbitRadius),
@@ -73,7 +73,7 @@ public class Planet extends ObjectInSpace {
 	 * @param sunMass
 	 * @param velocity
 	 */
-	public Planet(double mass, long density, Color color, Sun sun, long velocity, long radius) {
+	public Planet(double mass, long density, Color color, ObjectInSpace sun, long velocity, long radius) {
 		super(
 				mass,
 				radius,
@@ -122,11 +122,19 @@ public class Planet extends ObjectInSpace {
 	 * 
 	 * @param radius
 	 */
-	public void setRadius(long radius) {
+	public void setOrbitRadius(long radius) {
 		super.setRadius(radius);
 		super.setVelocity((long) Math.sqrt((double) (getRadius()
 				* Math.pow(getVelocity(), 2) / (double) radius)));
 		setPeriod();
+	}
+	
+	/**
+	 * 
+	 * @return the orbit radius of the planet
+	 */
+	public long getOrbitRadius(){
+		return this.orbitRadius;
 	}
 
 	/**
