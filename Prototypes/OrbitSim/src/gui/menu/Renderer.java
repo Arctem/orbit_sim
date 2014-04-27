@@ -82,8 +82,8 @@ public class Renderer implements Runnable {
 
 		GL11.glLoadIdentity();
 		GL11.glTranslatef(0, 0, zoomLevel);
-		GL11.glRotatef(20f, 1f, 0, 0);
-		GL11.glRotatef(xRotation, 0f, 1f, 0f);
+		GL11.glRotatef(110f, 1f, 0, 0);
+		GL11.glRotatef(xRotation, 0f, 0f, 1f);
 
 		/*
 		 * GL11.glBegin(GL11.GL_POINTS); for (Point p : points) { // Draw the
