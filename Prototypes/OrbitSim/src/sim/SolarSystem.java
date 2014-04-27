@@ -23,7 +23,8 @@ public class SolarSystem {
 	private double daysElapsed; // number of Earth days elapsed since starting the sim
 	private double monthsElapsed; // the number of Earth months elapsed (30.42 days per month)
 	private double yearsElapsed; // the Earth years elapsed since the start of the sim (12 months per year)
-
+	
+	
 	/**
 	 * @param simObjects
 	 * @param mainMenu

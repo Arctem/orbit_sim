@@ -83,11 +83,12 @@ public class SimRunner {
 			// update the game logic
 			// system.step(delta);
 
+			
 			system.step();
 			
 			// testing printing out statistics for time elapsed
-			/*System.out.println("\n" + system.getDaysElapsed() + ", " + system.getMonthsElapsed() + 
-					", " + system.getYearsElapsed() + "\n"); */ 
+			//System.out.println("\n" + system.getDaysElapsed() + ", " + system.getMonthsElapsed() + 
+			//		", " + system.getYearsElapsed() + "\n");  
 			
 
 			// we want each frame to take 10 milliseconds, to do this
