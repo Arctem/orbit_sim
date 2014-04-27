@@ -17,7 +17,7 @@ public class test {
 		Planet planet3 = new Planet(641850000000000000000000.0, 10, new Color(0), 
 				new Sun(2000000000000000000000000000000.0, 10, new Point3D(0, 0, 0), new Color(0), 10), 1500000, 10000);
 		
-		SolarSystem ss = new SolarSystem(new ArrayList<SimObject>(), null);
+		SolarSystem ss = new SolarSystem(null);
 		
 		ss.addSimObject(planet);
 		ss.addSimObject(planet2);
