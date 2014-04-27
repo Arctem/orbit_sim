@@ -15,7 +15,8 @@ import sim.util.Point3D;
  * 
  */
 public abstract class ObjectInSpace implements SimObject, GUIObject {
-	private long mass, radius, density, velocity;
+	private long radius, density, velocity;
+	private double mass;
 	private Sun sun;
 	private Point3D position;
 	private Color color;
@@ -28,7 +29,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	 * @param position
 	 * @param color
 	 */
-	public ObjectInSpace(long mass, long radius, long density, long velocity,
+	public ObjectInSpace(double mass, long radius, long density, long velocity,
 			Point3D position, Color color, Sun sun) {
 		super();
 		this.mass = mass;
@@ -40,7 +41,11 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		this.sun = sun;
 	}
 
-	public void step() {
+	/**
+	 * 
+	 * @param t the time elapsed in the step in seconds
+	 */
+	public void step(int t) {
 		
 	}
 	
@@ -63,7 +68,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	/**
 	 * @return the mass
 	 */
-	public long getMass() {
+	public double getMass() {
 		return mass;
 	}
 
@@ -126,7 +131,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		this.sun = sun;
 	}
 
-	public void setMass(long mass) {
+	public void setMass(double mass) {
 		this.mass = mass;
 	}
 

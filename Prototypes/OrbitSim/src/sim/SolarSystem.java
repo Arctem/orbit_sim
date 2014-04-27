@@ -15,7 +15,7 @@ import sim.simobject.SimObject;
  */
 public class SolarSystem {
 	
-	public static final long ASTRONOMICAL_UNIT = 149600000;
+	public static final long ASTRONOMICAL_UNIT = 149600000; // Au in km
 
 	private ArrayList<SimObject> simObjects;
 	private MainMenu mainMenu;
@@ -30,9 +30,9 @@ public class SolarSystem {
 		this.mainMenu = mainMenu;
 	}
 
-	public void step() {
+	public void step(int t) {
 		for (SimObject o : simObjects) {
-			o.step();
+			o.step(t);
 		}
 	}
 
