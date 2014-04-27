@@ -17,7 +17,7 @@ import gui.menu.Renderer;
  */
 public class SimRunner {
 
-	final static int TARGET_FPS = 60;
+	final static int TARGET_FPS = 240;
 	final static long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
 
 	/**
@@ -82,7 +82,7 @@ public class SimRunner {
 
 			// update the game logic
 			// system.step(delta);
-			system.step(10000);
+			system.step(2500);
 
 			// we want each frame to take 10 milliseconds, to do this
 			// we've recorded when we started the frame. We add 10 milliseconds
