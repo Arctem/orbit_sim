@@ -36,7 +36,7 @@ public class AsteroidBelt implements SimObject, GUIObject {
 	 * @see sim.simobject.SimObject#step()
 	 */
 	@Override
-	public void step() {
+	public void step(int t) {
 		// TODO Auto-generated method stub
 
 	}
