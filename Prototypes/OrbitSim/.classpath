@@ -9,5 +9,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lwjgl-2.9.1/jar/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="twl/TWL.jar"/>
+	<classpathentry kind="lib" path="xpp3-1.1.4c/xpp3-1.1.4c.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

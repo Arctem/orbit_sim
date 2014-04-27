@@ -24,7 +24,7 @@ public class SimRunner {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		MainMenu menu = null;
+		MainMenu menu = new MainMenu();
 		SolarSystem system = new SolarSystem(menu);
 		Renderer renderer = new Renderer(menu, system);
 
@@ -69,14 +69,14 @@ public class SimRunner {
 			double delta = updateLength / ((double) OPTIMAL_TIME);
 
 			// update the frame counter
-			lastFpsTime  += updateLength;
+			lastFpsTime += updateLength;
 			fps++;
 
 			// update our FPS counter if a second has passed since
 			// we last recorded
-			if (lastFpsTime  >= 1000000000) {
+			if (lastFpsTime >= 1000000000) {
 				System.out.println("(FPS: " + fps + ")");
-				lastFpsTime  = 0;
+				lastFpsTime = 0;
 				fps = 0;
 			}
 

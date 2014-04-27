@@ -6,6 +6,7 @@ package gui.menu;
 import gui.GUIObject;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
@@ -23,6 +24,11 @@ import sim.simobject.Planet;
 import sim.simobject.SimObject;
 import sim.simobject.Sun;
 import sim.util.Point3D;
+import de.matthiasmann.twl.Button;
+import de.matthiasmann.twl.GUI;
+import de.matthiasmann.twl.Widget;
+import de.matthiasmann.twl.renderer.lwjgl.LWJGLRenderer;
+import de.matthiasmann.twl.theme.ThemeManager;
 
 /**
  * @author russell
@@ -43,6 +49,10 @@ public class Renderer implements Runnable {
 	private SolarSystem solarSystem;
 	private MainMenu mainMenu;
 
+	private LWJGLRenderer guiRenderer;
+	private GUI gui;
+	private ThemeManager themeManager;
+
 	// ----------- Variables added for Lighting Test -----------//
 	private static FloatBuffer matSpecular, lightPosition, whiteLight,
 			lModelAmbient;
@@ -60,6 +70,7 @@ public class Renderer implements Runnable {
 		synchronized (this.solarSystem) {
 			this.initGL();
 			this.initLighting();
+			this.initGUI();
 		}
 
 		while (!Display.isCloseRequested()) {
@@ -99,11 +110,8 @@ public class Renderer implements Runnable {
 				System.out.println("Unknown object type: " + o);
 			}
 		}
-		// Renderer.setColor(sun.getColor());
-		// Renderer.renderSphere(sun.getPosition(), SUN_SIZE, RENDER_SCALE);
-		// Renderer.setColor(planet.getColor());
-		// Renderer.renderSphere(planet.getPosition(), PLANET_SIZE,
-		// RENDER_SCALE);
+
+		gui.update();
 
 		Display.update();
 	}
@@ -154,6 +162,26 @@ public class Renderer implements Runnable {
 
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 		GL11.glColorMaterial(GL11.GL_FRONT, GL11.GL_AMBIENT_AND_DIFFUSE);
+	}
+
+	private void initGUI() {
+		try {
+			this.guiRenderer = new LWJGLRenderer();
+		} catch (LWJGLException e) {
+			e.printStackTrace();
+		}
+
+		this.gui = new GUI(this.mainMenu, this.guiRenderer);
+
+		try {
+			this.themeManager = ThemeManager.createThemeManager(this.getClass()
+					.getResource("menu.xml"), this.guiRenderer);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		this.gui.applyTheme(themeManager);
+
 	}
 
 	// ------- Added for Lighting Test----------//
