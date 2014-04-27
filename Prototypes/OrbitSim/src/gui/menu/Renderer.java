@@ -85,12 +85,6 @@ public class Renderer implements Runnable {
 		GL11.glRotatef(110f, 1f, 0, 0);
 		GL11.glRotatef(xRotation, 0f, 0f, 1f);
 
-		/*
-		 * GL11.glBegin(GL11.GL_POINTS); for (Point p : points) { // Draw the
-		 * point at its coordinates GL11.glVertex3f(p.x, p.y, p.z); }
-		 * GL11.glEnd();
-		 */
-
 		for (SimObject o : solarSystem.getSimObjects()) {
 			if (o instanceof Sun) {
 				Sun s = (Sun) o;
@@ -178,7 +172,7 @@ public class Renderer implements Runnable {
 	}
 
 	public boolean isRunning() {
-		return !Display.isCloseRequested();
+		return Display.isCreated();
 	}
 
 	private static void renderSphere(float x, float y, float z, float radius) {
