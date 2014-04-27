@@ -5,15 +5,9 @@ package gui.menu;
 
 import gui.GUIObject;
 
-import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -26,6 +20,7 @@ import org.lwjgl.util.glu.Sphere;
 
 import sim.SolarSystem;
 import sim.simobject.Planet;
+import sim.simobject.SimObject;
 import sim.simobject.Sun;
 import sim.util.Point3D;
 
@@ -33,76 +28,93 @@ import sim.util.Point3D;
  * @author russell
  * 
  */
-public class Renderer {
+public class Renderer implements Runnable {
 	private static final float RENDER_SCALE = 0.000005f;
-	private static final float SUN_SIZE = 30f;
-	private static final float PLANET_SIZE = 20f;
+	private static final float SUN_SIZE = 50f;
+	private static final float PLANET_SIZE = 30f;
 
 	public static final int MENU_SIZE = 300;
 	private ArrayList<GUIObject> guiObjects;
 
-	private static float zoomLevel, zoomGoal;
-	private static float xRotation;
-	private static float rotationRate = 0.2f;
+	private float zoomLevel, zoomGoal;
+	private float xRotation;
+	private float rotationRate = 0.2f;
+
+	private SolarSystem solarSystem;
+	private MainMenu mainMenu;
 
 	// ----------- Variables added for Lighting Test -----------//
 	private static FloatBuffer matSpecular, lightPosition, whiteLight,
 			lModelAmbient;
 
-	public static void main(String args[]) {
-		Renderer.initialize();
-		Renderer.startMainLoop();
+	public Renderer(MainMenu mainMenu, SolarSystem solarSystem) {
+		this.mainMenu = mainMenu;
+		this.solarSystem = solarSystem;
+
+		this.zoomLevel = -100000f;
+		this.zoomGoal = -1000f;
+		this.xRotation = 0.0f;
 	}
 
-	public static void startMainLoop() {
-		Sun sun = new Sun(0, 0, new Point3D(0, 0, 0), Color.YELLOW, 100);
-		Planet planet = new Planet(0, SolarSystem.ASTRONOMICAL_UNIT, 5,
-				Color.GREEN, sun);
+	public void run() {
+		synchronized (this.solarSystem) {
+			this.initGL();
+			this.initLighting();
+		}
 
 		while (!Display.isCloseRequested()) {
-			// Render stuff.
-			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-
-			zoomGoal += Mouse.getDWheel() * 0.1f;
-			zoomLevel = (zoomGoal + zoomLevel * 2) / 3;
-
-			if (Mouse.isButtonDown(1))
-				xRotation += Mouse.getDX() * 0.1f;
-
-			GL11.glLoadIdentity();
-			GL11.glTranslatef(0, 0, zoomLevel);
-			GL11.glRotatef(20f, 1f, 0, 0);
-			GL11.glRotatef(xRotation, 0f, 1f, 0f);
-
-			/*
-			 * GL11.glBegin(GL11.GL_POINTS); for (Point p : points) { // Draw
-			 * the point at its coordinates GL11.glVertex3f(p.x, p.y, p.z); }
-			 * GL11.glEnd();
-			 */
-
-			Renderer.setColor(sun.getColor());
-			Renderer.renderSphere(sun.getPosition(), SUN_SIZE, RENDER_SCALE);
-			Renderer.setColor(planet.getColor());
-			Renderer.renderSphere(planet.getPosition(), PLANET_SIZE,
-					RENDER_SCALE);
-
-			Display.update();
+			this.render();
 			Display.sync(60);
 		}
 
 		Display.destroy();
 	}
 
-	public static void initialize() {
-		initGL();
-		initLighting();
+	public void render() {
+		// Render stuff.
+		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-		zoomLevel = -200f;
-		zoomGoal = -200f;
-		xRotation = 0.0f;
+		zoomGoal += Mouse.getDWheel() * 0.1f;
+		zoomLevel = (zoomGoal + zoomLevel * 2) / 3;
+
+		if (Mouse.isButtonDown(1))
+			xRotation += Mouse.getDX() * 0.2f;
+
+		GL11.glLoadIdentity();
+		GL11.glTranslatef(0, 0, zoomLevel);
+		GL11.glRotatef(110f, 1f, 0, 0);
+		GL11.glRotatef(xRotation, 0f, 0f, 1f);
+
+		/*
+		 * GL11.glBegin(GL11.GL_POINTS); for (Point p : points) { // Draw the
+		 * point at its coordinates GL11.glVertex3f(p.x, p.y, p.z); }
+		 * GL11.glEnd();
+		 */
+
+		for (SimObject o : solarSystem.getSimObjects()) {
+			if (o instanceof Sun) {
+				Sun s = (Sun) o;
+				Renderer.setColor(s.getColor());
+				Renderer.renderSphere(s.getPosition(), SUN_SIZE, RENDER_SCALE);
+			} else if (o instanceof Planet) {
+				Planet p = (Planet) o;
+				Renderer.setColor(p.getColor());
+				Renderer.renderSphere(p.getPosition(), PLANET_SIZE,
+						RENDER_SCALE);
+			} else {
+				System.out.println("Unknown object type: " + o);
+			}
+		}
+		// Renderer.setColor(sun.getColor());
+		// Renderer.renderSphere(sun.getPosition(), SUN_SIZE, RENDER_SCALE);
+		// Renderer.setColor(planet.getColor());
+		// Renderer.renderSphere(planet.getPosition(), PLANET_SIZE,
+		// RENDER_SCALE);
+
+		Display.update();
 	}
 
-	private static void initGL() {
+	private void initGL() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1600, 1000));
 			Display.setTitle("Orbit Simulator");
@@ -132,7 +144,7 @@ public class Renderer {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 	}
 
-	private static void initLighting() {
+	private void initLighting() {
 		initLightArrays();
 		GL11.glShadeModel(GL11.GL_SMOOTH);
 		GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, matSpecular);
@@ -151,7 +163,7 @@ public class Renderer {
 	}
 
 	// ------- Added for Lighting Test----------//
-	private static void initLightArrays() {
+	private void initLightArrays() {
 		matSpecular = BufferUtils.createFloatBuffer(4);
 		matSpecular.put(1.0f).put(1.0f).put(1.0f).put(1.0f).flip();
 
@@ -163,6 +175,10 @@ public class Renderer {
 
 		lModelAmbient = BufferUtils.createFloatBuffer(4);
 		lModelAmbient.put(0.5f).put(0.5f).put(0.5f).put(1.0f).flip();
+	}
+
+	public boolean isRunning() {
+		return !Display.isCloseRequested();
 	}
 
 	private static void renderSphere(float x, float y, float z, float radius) {
@@ -184,12 +200,24 @@ public class Renderer {
 				/ (float) 255, color.getBlue() / (float) 255);
 	}
 
-	public static void render() {
+	public void stop() {
 
 	}
 
-	public static void stop() {
+	public SolarSystem getSolarSystem() {
+		return solarSystem;
+	}
 
+	public void setSolarSystem(SolarSystem solarSystem) {
+		this.solarSystem = solarSystem;
+	}
+
+	public MainMenu getMainMenu() {
+		return mainMenu;
+	}
+
+	public void setMainMenu(MainMenu mainMenu) {
+		this.mainMenu = mainMenu;
 	}
 
 }

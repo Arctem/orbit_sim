@@ -15,8 +15,9 @@ import sim.util.Point3D;
  * 
  */
 public abstract class ObjectInSpace implements SimObject, GUIObject {
-	private long mass, radius, density, velocity;
-	private Sun sun;
+	private long radius, density, velocity;
+	private double mass;
+	private ObjectInSpace sun;
 	private Point3D position;
 	private Color color;
 
@@ -28,8 +29,8 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	 * @param position
 	 * @param color
 	 */
-	public ObjectInSpace(long mass, long radius, long density, long velocity,
-			Point3D position, Color color, Sun sun) {
+	public ObjectInSpace(double mass, long radius, long density, long velocity,
+			Point3D position, Color color, ObjectInSpace sun) {
 		super();
 		this.mass = mass;
 		this.radius = radius;
@@ -40,7 +41,11 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		this.sun = sun;
 	}
 
-	public void step() {
+	/**
+	 * 
+	 * @param t the time elapsed in the step in seconds
+	 */
+	public void step(int t) {
 		
 	}
 	
@@ -63,7 +68,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	/**
 	 * @return the mass
 	 */
-	public long getMass() {
+	public double getMass() {
 		return mass;
 	}
 
@@ -118,7 +123,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		return color;
 	}
 
-	public Sun getSun() {
+	public ObjectInSpace getSun() {
 		return sun;
 	}
 
@@ -126,14 +131,24 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		this.sun = sun;
 	}
 
-	public void setMass(long mass) {
+	public void setMass(double mass) {
 		this.mass = mass;
 	}
 
+	/**
+	 * se the position of the object
+	 * @param position the position to set it to
+	 */
 	public void setPosition(Point3D position) {
 		this.position = position;
 	}
 	
+	/**
+	 * set the Cartesian position of the object
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @param z the z coordinate
+	 */
 	public void setPosition(long x, long y, long z){
 		this.position.setXYZ(x, y, z);
 	}
