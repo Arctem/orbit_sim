@@ -91,7 +91,6 @@ public class SimRunner {
 			// remember this is in ms, whereas our lastLoopTime etc. vars are in
 			// ns.
 			try {
-				System.out.println(lastLoopTime + ", " + System.nanoTime());
 				Thread.sleep((lastLoopTime - System.nanoTime() + OPTIMAL_TIME) / 1000000);
 			} catch (InterruptedException e) {
 				System.exit(-1);
