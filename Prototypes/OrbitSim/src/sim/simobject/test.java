@@ -17,7 +17,7 @@ public class test {
 		Planet planet3 = new Planet(641850000000000000000000.0, 10, new Color(0), 
 				new Sun(2000000000000000000000000000000.0, 10, new Point3D(0, 0, 0), new Color(0), 10), 1500000, 10000);
 		
-		SolarSystem ss = new SolarSystem(new ArrayList<SimObject>(), null);
+		SolarSystem ss = new SolarSystem(null, 10000);
 		
 		ss.addSimObject(planet);
 		ss.addSimObject(planet2);
@@ -40,7 +40,7 @@ public class test {
 			System.out.println(planet.getPosition().getX() + ", " + planet.getPosition().getY());
 			System.out.println(planet2.getPosition().getX() + ", " + planet2.getPosition().getY());
 			System.out.println(planet3.getPosition().getX() + ", " + planet3.getPosition().getY() + "\n");
-			ss.step(1000);
+			ss.step();
 		}
 	}
 

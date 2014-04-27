@@ -160,7 +160,7 @@ public class Planet extends ObjectInSpace {
 	 * calculates the new position of the planet after t seconds
 	 * @param t the time elapsed in seconds
 	 */
-	public void calculateNewPosition(int t){
+	public void calculateNewPosition(long t){
 		long x;
 		long y;
 		
@@ -173,7 +173,7 @@ public class Planet extends ObjectInSpace {
 	}
 	
 	@Override
-	public void step(int t){
+	public void step(long t){
 		super.step(t);
 		
 		calculateNewPosition(t);

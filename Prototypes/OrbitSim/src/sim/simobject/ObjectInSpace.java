@@ -45,7 +45,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	 * 
 	 * @param t the time elapsed in the step in seconds
 	 */
-	public void step(int t) {
+	public void step(long t) {
 		
 	}
 	

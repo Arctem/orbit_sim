@@ -25,7 +25,7 @@ public class SimRunner {
 	 */
 	public static void main(String[] args) {
 		MainMenu menu = null;
-		SolarSystem system = new SolarSystem(menu);
+		SolarSystem system = new SolarSystem(menu, 10000);
 		Renderer renderer = new Renderer(menu, system);
 
 		Sun sun = new Sun(2000000000000000000000000000000.0, 10, new Point3D(0,
@@ -82,7 +82,12 @@ public class SimRunner {
 
 			// update the game logic
 			// system.step(delta);
-			system.step(10000);
+			system.step();
+			
+			// testing printing out statistics for time elapsed
+			/*System.out.println("\n" + system.getDaysElapsed() + ", " + system.getMonthsElapsed() + 
+					", " + system.getYearsElapsed() + "\n"); */ 
+			
 
 			// we want each frame to take 10 milliseconds, to do this
 			// we've recorded when we started the frame. We add 10 milliseconds
