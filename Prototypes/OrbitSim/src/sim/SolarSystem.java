@@ -25,8 +25,8 @@ public class SolarSystem {
 	 * @param simObjects
 	 * @param mainMenu
 	 */
-	public SolarSystem(ArrayList<SimObject> simObjects, MainMenu mainMenu) {
-		this.simObjects = simObjects;
+	public SolarSystem(MainMenu mainMenu) {
+		this.simObjects = new ArrayList<SimObject>();
 		this.mainMenu = mainMenu;
 	}
 
