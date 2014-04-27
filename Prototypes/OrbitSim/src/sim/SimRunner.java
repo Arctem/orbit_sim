@@ -17,7 +17,7 @@ import gui.menu.Renderer;
  */
 public class SimRunner {
 
-	final static int TARGET_FPS = 60;
+	final static int TARGET_FPS = 240;
 	final static long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
 
 	/**
@@ -25,7 +25,7 @@ public class SimRunner {
 	 */
 	public static void main(String[] args) {
 		MainMenu menu = null;
-		SolarSystem system = new SolarSystem(menu, 10000);
+		SolarSystem system = new SolarSystem(menu, 2500);
 		Renderer renderer = new Renderer(menu, system);
 
 		Sun sun = new Sun(2000000000000000000000000000000.0, 10, new Point3D(0,
@@ -82,6 +82,7 @@ public class SimRunner {
 
 			// update the game logic
 			// system.step(delta);
+
 			system.step();
 			
 			// testing printing out statistics for time elapsed
