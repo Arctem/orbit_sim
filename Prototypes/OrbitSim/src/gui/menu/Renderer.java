@@ -22,6 +22,7 @@ import org.lwjgl.util.glu.Sphere;
 import sim.SolarSystem;
 import sim.simobject.Planet;
 import sim.simobject.SimObject;
+import sim.simobject.Star;
 import sim.simobject.Sun;
 import sim.util.Point3D;
 import de.matthiasmann.twl.Button;
@@ -37,7 +38,8 @@ import de.matthiasmann.twl.theme.ThemeManager;
 public class Renderer implements Runnable {
 	private static final float RENDER_SCALE = 0.000005f;
 	private static final float SUN_SIZE = 50f;
-	private static final float PLANET_SIZE = 30f;
+	private static final float PLANET_SIZE_MAX = 25f;
+	private static final float PLANET_SIZE_MIN = 10f;
 
 	public static final int MENU_SIZE = 300;
 	public static Renderer renderer;
@@ -81,6 +83,7 @@ public class Renderer implements Runnable {
 			this.render();
 			Display.sync(60);
 		}
+		System.out.println("Display closing.");
 
 		Display.destroy();
 	}
@@ -107,8 +110,19 @@ public class Renderer implements Runnable {
 			} else if (o instanceof Planet) {
 				Planet p = (Planet) o;
 				Renderer.setColor(p.getColor());
-				Renderer.renderSphere(p.getPosition(), PLANET_SIZE,
-						RENDER_SCALE);
+				if (p.getSun() instanceof Sun)
+					Renderer.renderSphere(p.getPosition(), PLANET_SIZE_MAX,
+							RENDER_SCALE);
+				else
+					Renderer.renderSphere(p.getPosition(), PLANET_SIZE_MIN,
+							RENDER_SCALE);
+			} else if (o instanceof Star) {
+				Star s = (Star) o;
+				Renderer.setColor(s.getColor());
+				GL11.glBegin(GL11.GL_POINTS);
+				GL11.glVertex3f(s.getPosition().getX(), s.getPosition().getY(),
+						s.getPosition().getZ());
+				GL11.glEnd();
 			} else {
 				System.out.println("Unknown object type: " + o);
 			}
@@ -131,7 +145,7 @@ public class Renderer implements Runnable {
 		/** The minimal distance from the camera where objects are rendered. */
 		float zNear = 0.3f;
 		/** The maximal distance from the camera where objects are rendered. */
-		float zFar = 20000f;
+		float zFar = 200000f;
 		/** Defines the field of view. */
 		int fov = 90;
 

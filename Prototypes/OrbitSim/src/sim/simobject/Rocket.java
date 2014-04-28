@@ -11,6 +11,9 @@ import sim.util.Point3D;
 /**
  * @author russell
  * 
+ * This is a rocket that can travel between worlds.
+ * 
+ * Note: This has not been implemented.
  */
 public class Rocket extends ObjectInSpace {
 
@@ -42,14 +45,6 @@ public class Rocket extends ObjectInSpace {
 		this.destination = destination;
 	}
 	
-	public void render(Graphics2D g) {
-		
-	}
 
-	@Override
-	public void changeProperty(String propName, int value) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
