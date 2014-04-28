@@ -124,7 +124,6 @@ public class Renderer implements Runnable {
 			Display.setDisplayMode(new DisplayMode(1600, 1000));
 			Display.setTitle("Orbit Simulator");
 			Display.create();
-
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}

@@ -27,6 +27,7 @@ public class SimRunner {
 		MainMenu menu = new MainMenu();
 		SolarSystem system = new SolarSystem(menu);
 		Renderer renderer = new Renderer(menu, system);
+		menu.setSolarSystem(system);
 
 		Sun sun = new Sun(2000000000000000000000000000000.0, 10, new Point3D(0,
 				0, 0), new Color(255, 120, 50), 10);

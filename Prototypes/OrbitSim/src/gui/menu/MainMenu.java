@@ -8,6 +8,7 @@ import gui.GUIObject;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import sim.SolarSystem;
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.Event;
 import de.matthiasmann.twl.Widget;
@@ -20,6 +21,7 @@ public class MainMenu extends Widget implements GUIObject {
 
 	private ArrayList<MenuElement> elements;
 	private Button button;
+	private SolarSystem solarSystem;
 
 	/**
 	 * 
@@ -46,8 +48,7 @@ public class MainMenu extends Widget implements GUIObject {
 
 	protected boolean handleEvent(Event e) {
 		boolean hitGUI = super.handleEvent(e);
-		System.out.println(hitGUI + ", " + e.getMouseButton() + ": "
-				+ e.getMouseWheelDelta());
+
 		if (e.getMouseWheelDelta() != 0) {
 			Renderer.renderer.zoom(e.getMouseWheelDelta());
 		}
@@ -78,6 +79,14 @@ public class MainMenu extends Widget implements GUIObject {
 	public void create() {
 		// TODO Auto-generated method stub
 
+	}
+
+	public SolarSystem getSolarSystem() {
+		return solarSystem;
+	}
+
+	public void setSolarSystem(SolarSystem solarSystem) {
+		this.solarSystem = solarSystem;
 	}
 
 }
