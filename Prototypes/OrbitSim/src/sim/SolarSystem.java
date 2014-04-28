@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import sim.simobject.SimObject;
 
 /**
- * @author russell
+ * @author russell, AJ
+ * 
+ * The solar system contains the sun and whatever planets the user wants.
+ * It also stores information about the simulation, like time elapsed.
  * 
  */
 public class SolarSystem {

@@ -11,10 +11,12 @@ import java.awt.Graphics2D;
 import sim.util.Point3D;
 
 /**
- * @author russell
+ * @author russell, AJ
  * 
+ * This is an abstract class that contains all the information needed for each object in space
+ * Every object, like planets, suns, and others inherit from this class.
  */
-public abstract class ObjectInSpace implements SimObject, GUIObject {
+public abstract class ObjectInSpace implements SimObject{
 	private long radius, density, velocity;
 	private double mass;
 	private ObjectInSpace sun;
@@ -42,27 +44,11 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	}
 
 	/**
-	 * 
+	 * Perform calculations on each step of the simulation
 	 * @param t the time elapsed in the step in seconds
 	 */
 	public void step(long t) {
 		
-	}
-	
-	public void render(Graphics2D g) {
-		
-	}
-	
-	public void create() {
-
-	}
-
-	public void delete() {
-
-	}
-
-	public void changeProperty(String propName, long value) {
-
 	}
 
 	/**

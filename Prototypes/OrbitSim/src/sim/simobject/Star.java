@@ -28,15 +28,5 @@ public class Star extends ObjectInSpace {
 		// TODO Auto-generated constructor stub
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sim.simobject.SimObject#changeProperty(java.lang.String, int)
-	 */
-	@Override
-	public void changeProperty(String propName, int value) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

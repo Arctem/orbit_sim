@@ -4,13 +4,15 @@
 package sim.simobject;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 import sim.util.Point3D;
 
 /**
- * @author russell
+ * @author russell, AJ
  * 
- *         TODO convert masses to doubles.
+ * Each object of this is a planet. A planet can either orbit a sun
+ * or it can orbit another planet, making it a moon. 
  */
 
 public class Planet extends ObjectInSpace {
@@ -154,12 +156,6 @@ public class Planet extends ObjectInSpace {
 		setPeriod();
 	}
 
-	@Override
-	public void changeProperty(String propName, int value) {
-		// TODO Auto-generated method stub
-
-	}
-
 	/**
 	 * calculates the new position of the planet after t seconds
 	 * 
@@ -171,6 +167,9 @@ public class Planet extends ObjectInSpace {
 		long y;
 
 		angle += angularVelocity * t;
+		if(angle >= (2 * Math.PI)){
+			angle -= (2 * Math.PI);
+		}
 
 		x = (long) (this.orbitRadius * Math.cos(angle));
 		y = (long) (this.orbitRadius * Math.sin(angle));
@@ -182,12 +181,20 @@ public class Planet extends ObjectInSpace {
 
 		this.setPosition(x, y, 0);
 	}
+	
+	public void calculateNewPosition(long t, double tilt){
+		long x, y, z;
+		
+		calculateNewPosition(t);
+		
+		
+	}
 
 	@Override
 	public void step(long t) {
 		super.step(t);
 
 		calculateNewPosition(t);
-	}
+	} 
 
 }

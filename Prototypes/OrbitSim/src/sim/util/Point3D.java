@@ -4,7 +4,7 @@
 package sim.util;
 
 /**
- * @author russell
+ * @author russell, AJ
  * 
  * This stores the location in a 3D Cartesian graph
  */
@@ -12,9 +12,9 @@ public class Point3D {
 	private long x, y, z;
 
 	/**
-	 * @param x
-	 * @param y
-	 * @param z
+	 * @param x, x coordinate
+	 * @param y, y coordinate
+	 * @param z, z coordinate
 	 */
 	public Point3D(long x, long y, long z) {
 		this.x = x;
