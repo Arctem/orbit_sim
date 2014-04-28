@@ -26,7 +26,7 @@ public class SimRunner {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		MainMenu menu = null;
+		MainMenu menu = new MainMenu();
 		SolarSystem system = new SolarSystem(menu, 2500);
 		Renderer renderer = new Renderer(menu, system);
 		menu.setSolarSystem(system);

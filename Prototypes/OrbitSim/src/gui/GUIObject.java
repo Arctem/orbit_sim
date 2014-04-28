@@ -3,14 +3,12 @@
  */
 package gui;
 
-import java.awt.Graphics2D;
+import de.matthiasmann.twl.Button;
 
 /**
  * @author russell
  * 
  */
 public interface GUIObject {
-	public void render(Graphics2D g);
-
-	public void create();
+	public Button createButton();
 }

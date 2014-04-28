@@ -4,15 +4,15 @@
 package sim.simobject;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 import sim.util.Point3D;
+import de.matthiasmann.twl.Button;
 
 /**
  * @author russell, AJ
  * 
- * Each object of this is a planet. A planet can either orbit a sun
- * or it can orbit another planet, making it a moon. 
+ *         Each object of this is a planet. A planet can either orbit a sun or
+ *         it can orbit another planet, making it a moon.
  */
 
 public class Planet extends ObjectInSpace {
@@ -167,7 +167,7 @@ public class Planet extends ObjectInSpace {
 		long y;
 
 		angle += angularVelocity * t;
-		if(angle >= (2 * Math.PI)){
+		if (angle >= (2 * Math.PI)) {
 			angle -= (2 * Math.PI);
 		}
 
@@ -181,13 +181,12 @@ public class Planet extends ObjectInSpace {
 
 		this.setPosition(x, y, 0);
 	}
-	
-	public void calculateNewPosition(long t, double tilt){
+
+	public void calculateNewPosition(long t, double tilt) {
 		long x, y, z;
-		
+
 		calculateNewPosition(t);
-		
-		
+
 	}
 
 	@Override
@@ -195,6 +194,8 @@ public class Planet extends ObjectInSpace {
 		super.step(t);
 
 		calculateNewPosition(t);
-	} 
+	}
+
+	
 
 }

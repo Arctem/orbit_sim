@@ -3,17 +3,20 @@
  */
 package sim;
 
+import gui.GUIObject;
 import gui.menu.MainMenu;
 
 import java.util.ArrayList;
 
+import sim.simobject.ObjectInSpace;
 import sim.simobject.SimObject;
 
 /**
  * @author russell, AJ
  * 
- * The solar system contains the sun and whatever planets the user wants.
- * It also stores information about the simulation, like time elapsed.
+ *         The solar system contains the sun and whatever planets the user
+ *         wants. It also stores information about the simulation, like time
+ *         elapsed.
  * 
  */
 public class SolarSystem {
@@ -21,6 +24,7 @@ public class SolarSystem {
 	public static final long ASTRONOMICAL_UNIT = 149600000; // Au in km
 
 	private ArrayList<SimObject> simObjects;
+	private SimObject selectedObject;
 	private MainMenu mainMenu;
 	private long timeScale; // number of seconds per step
 	private double daysElapsed; // number of Earth days elapsed since starting
@@ -38,6 +42,7 @@ public class SolarSystem {
 		this.simObjects = new ArrayList<SimObject>();
 		this.mainMenu = mainMenu;
 		this.timeScale = timeScale;
+		this.selectedObject = null;
 
 		daysElapsed = 0;
 		monthsElapsed = 0;
@@ -128,6 +133,10 @@ public class SolarSystem {
 
 	public void addSimObject(SimObject simObject) {
 		this.simObjects.add(simObject);
+		if (simObject instanceof ObjectInSpace)
+			((ObjectInSpace) simObject).setParent(this);
+		if (simObject instanceof GUIObject)
+			this.mainMenu.addButton(((GUIObject) simObject).createButton());
 	}
 
 	/**
@@ -149,5 +158,13 @@ public class SolarSystem {
 	 */
 	public double getYearsElapsed() {
 		return yearsElapsed;
+	}
+
+	public SimObject getSelectedObject() {
+		return selectedObject;
+	}
+
+	public void setSelectedObject(SimObject selectedObject) {
+		this.selectedObject = selectedObject;
 	}
 }
