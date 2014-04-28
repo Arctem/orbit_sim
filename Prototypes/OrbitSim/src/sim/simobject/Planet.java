@@ -182,12 +182,30 @@ public class Planet extends ObjectInSpace {
 		this.setPosition(x, y, 0);
 	}
 	
-	public void calculateNewPosition(long t, double tilt){
-		long x, y, z;
+	public void calculateNewPosition(long t, long hMax){
+		long x, y, z = 0;
+		double tmpAngle;
 		
-		calculateNewPosition(t);
+		tmpAngle = angle;
 		
+		// if the angle is > 180 degrees, make it negative and 0 < angle < 180
+		if(tmpAngle >= Math.PI && tmpAngle < ((3 * Math.PI) / 2)){
+			tmpAngle = (-1) * (tmpAngle - Math.PI);
+		}else if(tmpAngle >= ((3 * Math.PI) / 2) && tmpAngle < (2 * Math.PI)){
+			tmpAngle = (-1) * (tmpAngle - ((Math.PI * 3) / 2 ));
+		}
 		
+		// figure out how high the object needs to be at a given point
+		if(Math.abs(tmpAngle) >= 0 && Math.abs(tmpAngle) <= (Math.PI / 2)){
+			z = (long)((2 * tmpAngle * hMax) / Math.PI);
+		}else if(Math.abs(tmpAngle) > (Math.PI / 2) && Math.abs(tmpAngle) <= (Math.PI)){
+			z = (long)((this.getPosition().getZ() - (tmpAngle * hMax)) / Math.PI);
+		}
+		
+		x = (long) (this.orbitRadius * Math.cos(angle));
+		y = (long) (this.orbitRadius * Math.sin(angle));
+		
+		this.setPosition(x, y, z);
 	}
 
 	@Override
