@@ -10,25 +10,26 @@ import java.util.ArrayList;
 
 /**
  * @author russell
- *
+ * 
  */
 public class MainMenu implements GUIObject {
 
-	
 	private ArrayList<MenuElement> elements;
-	
+
 	/**
 	 * 
 	 */
 	public MainMenu() {
 		this.elements = new ArrayList<MenuElement>();
 	}
-	
+
 	public void update() {
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see gui.GUIObject#render(java.awt.Graphics2D)
 	 */
 	@Override
@@ -37,7 +38,9 @@ public class MainMenu implements GUIObject {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see gui.GUIObject#create()
 	 */
 	@Override

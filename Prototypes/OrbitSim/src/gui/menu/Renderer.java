@@ -31,7 +31,8 @@ import sim.util.Point3D;
 public class Renderer implements Runnable {
 	private static final float RENDER_SCALE = 0.000005f;
 	private static final float SUN_SIZE = 50f;
-	private static final float PLANET_SIZE = 30f;
+	private static final float PLANET_SIZE_MAX = 25f;
+	private static final float PLANET_SIZE_MIN = 10f;
 
 	public static final int MENU_SIZE = 300;
 	private ArrayList<GUIObject> guiObjects;
@@ -99,8 +100,12 @@ public class Renderer implements Runnable {
 			} else if (o instanceof Planet) {
 				Planet p = (Planet) o;
 				Renderer.setColor(p.getColor());
-				Renderer.renderSphere(p.getPosition(), PLANET_SIZE,
-						RENDER_SCALE);
+				if (p.getSun() instanceof Sun)
+					Renderer.renderSphere(p.getPosition(), PLANET_SIZE_MAX,
+							RENDER_SCALE);
+				else
+					Renderer.renderSphere(p.getPosition(), PLANET_SIZE_MIN,
+							RENDER_SCALE);
 			} else {
 				System.out.println("Unknown object type: " + o);
 			}

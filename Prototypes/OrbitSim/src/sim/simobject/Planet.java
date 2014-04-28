@@ -10,7 +10,7 @@ import sim.util.Point3D;
 /**
  * @author russell
  * 
- * TODO convert masses to doubles.
+ *         TODO convert masses to doubles.
  */
 
 public class Planet extends ObjectInSpace {
@@ -30,12 +30,13 @@ public class Planet extends ObjectInSpace {
 	 * @param color
 	 */
 	public Planet(double mass, long orbitRadius, long density, long velocity,
-			Point3D position, Color color, boolean habitable, ObjectInSpace sun, long radius) {
+			Point3D position, Color color, boolean habitable,
+			ObjectInSpace sun, long radius) {
 		super(mass, radius, density, velocity, position, color, sun);
 		this.orbitRadius = 0;
 		this.habitable = habitable;
 		this.angle = 0;
-		
+
 		setPeriod();
 		setAngularVelocity();
 	}
@@ -52,13 +53,12 @@ public class Planet extends ObjectInSpace {
 	 */
 	public Planet(double mass, long orbitRadius, long density, Color color,
 			ObjectInSpace sun, long radius) {
-		super(mass, radius, density, (long) Math
-				.sqrt((6.67 * Math.pow(10, (-11)) * sun.getMass())
-						/ (double) orbitRadius),
-				new Point3D(orbitRadius, 0, 0), color, sun);
+		super(mass, radius, density, (long) Math.sqrt((6.67 * Math.pow(10,
+				(-11)) * sun.getMass()) / (double) orbitRadius), new Point3D(
+				orbitRadius, 0, 0), color, sun);
 		this.orbitRadius = orbitRadius;
 		this.angle = 0;
-		
+
 		setPeriod();
 		setAngularVelocity();
 	}
@@ -73,19 +73,20 @@ public class Planet extends ObjectInSpace {
 	 * @param sunMass
 	 * @param velocity
 	 */
-	public Planet(double mass, long density, Color color, ObjectInSpace sun, long velocity, long radius) {
+	public Planet(double mass, long density, Color color, ObjectInSpace sun,
+			long velocity, long radius) {
 		super(
 				mass,
 				radius,
 				density,
 				velocity,
 				new Point3D(
-						(long)((6.67 * Math.pow(10, (-11)) * sun.getMass()) / Math
+						(long) ((6.67 * Math.pow(10, (-11)) * sun.getMass()) / Math
 								.pow(velocity, 2)), 0, 0), color, sun);
 		this.orbitRadius = (long) ((6.67 * Math.pow(10, (-11)) * sun.getMass()) / Math
 				.pow(velocity, 2));
 		this.angle = 0;
-		
+
 		setPeriod();
 		setAngularVelocity();
 	}
@@ -101,19 +102,22 @@ public class Planet extends ObjectInSpace {
 	 * set the period based off the other variables in place
 	 */
 	public void setPeriod() {
-		this.period = Math.sqrt(((4.0 * Math.pow(Math.PI, 2) * Math.pow((orbitRadius * 1000), 3))
-				/ ((6.67 * Math.pow(10, (-11))) * getSun().getMass())));
+		this.period = Math
+				.sqrt(((4.0 * Math.pow(Math.PI, 2) * Math.pow(
+						(orbitRadius * 1000), 3)) / ((6.67 * Math
+						.pow(10, (-11))) * getSun().getMass())));
 	}
-	
-	public double getAngularVelocity(){
+
+	public double getAngularVelocity() {
 		return this.angularVelocity;
 	}
-	
+
 	/**
 	 * sets the angular velocity of the planet based off other variables
+	 * 
 	 * @note must be called after setPeriod to work properly.
 	 */
-	public void setAngularVelocity(){
+	public void setAngularVelocity() {
 		this.angularVelocity = (2 * Math.PI) / this.period;
 	}
 
@@ -128,12 +132,12 @@ public class Planet extends ObjectInSpace {
 				* Math.pow(getVelocity(), 2) / (double) radius)));
 		setPeriod();
 	}
-	
+
 	/**
 	 * 
 	 * @return the orbit radius of the planet
 	 */
-	public long getOrbitRadius(){
+	public long getOrbitRadius() {
 		return this.orbitRadius;
 	}
 
@@ -155,27 +159,34 @@ public class Planet extends ObjectInSpace {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	/**
 	 * calculates the new position of the planet after t seconds
-	 * @param t the time elapsed in seconds
+	 * 
+	 * @param t
+	 *            the time elapsed in seconds
 	 */
-	public void calculateNewPosition(long t){
+	public void calculateNewPosition(long t) {
 		long x;
 		long y;
-		
+
 		angle += angularVelocity * t;
-		
-		x = (long)(this.orbitRadius * Math.cos(angle));
-		y = (long)(this.orbitRadius * Math.sin(angle));
-		
+
+		x = (long) (this.orbitRadius * Math.cos(angle));
+		y = (long) (this.orbitRadius * Math.sin(angle));
+
+		// Adjust for if Sun is not in the center of the Universe i.e. another
+		// planet.
+		x += this.getSun().getPosition().getX();
+		y += this.getSun().getPosition().getY();
+
 		this.setPosition(x, y, 0);
 	}
-	
+
 	@Override
-	public void step(long t){
+	public void step(long t) {
 		super.step(t);
-		
+
 		calculateNewPosition(t);
 	}
 

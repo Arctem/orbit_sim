@@ -31,12 +31,16 @@ public class SimRunner {
 		Sun sun = new Sun(2000000000000000000000000000000.0, 10, new Point3D(0,
 				0, 0), new Color(255, 120, 50), 10);
 		system.addSimObject(sun);
-		system.addSimObject(new Planet(60000000000000000000000000.0,
+		Planet test = new Planet(60000000000000000000000000.0,
 				SolarSystem.ASTRONOMICAL_UNIT, 10, new Color(124, 255, 12),
-				sun, 1000));
+				sun, 2000);
+		system.addSimObject(test);
 		system.addSimObject(new Planet(60000000000000000000000000.0,
 				SolarSystem.ASTRONOMICAL_UNIT * 3 / 2, 10, new Color(124, 255,
-						12), sun, 1000));
+						12), sun, 2000));
+		system.addSimObject(new Planet(6000000000000000000.0,
+				SolarSystem.ASTRONOMICAL_UNIT / 20, 10,
+				new Color(124, 255, 12), test, 1000));
 
 		Thread renderThread = new Thread(renderer);
 		renderThread.start();
@@ -69,27 +73,26 @@ public class SimRunner {
 			double delta = updateLength / ((double) OPTIMAL_TIME);
 
 			// update the frame counter
-			lastFpsTime  += updateLength;
+			lastFpsTime += updateLength;
 			fps++;
 
 			// update our FPS counter if a second has passed since
 			// we last recorded
-			if (lastFpsTime  >= 1000000000) {
+			if (lastFpsTime >= 1000000000) {
 				System.out.println("(FPS: " + fps + ")");
-				lastFpsTime  = 0;
+				lastFpsTime = 0;
 				fps = 0;
 			}
 
 			// update the game logic
 			// system.step(delta);
 
-			
 			system.step();
-			
+
 			// testing printing out statistics for time elapsed
-			//System.out.println("\n" + system.getDaysElapsed() + ", " + system.getMonthsElapsed() + 
-			//		", " + system.getYearsElapsed() + "\n");  
-			
+			// System.out.println("\n" + system.getDaysElapsed() + ", " +
+			// system.getMonthsElapsed() +
+			// ", " + system.getYearsElapsed() + "\n");
 
 			// we want each frame to take 10 milliseconds, to do this
 			// we've recorded when we started the frame. We add 10 milliseconds
