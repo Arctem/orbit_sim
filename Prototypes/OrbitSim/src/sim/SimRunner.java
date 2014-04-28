@@ -3,13 +3,15 @@
  */
 package sim;
 
+import gui.menu.MainMenu;
+import gui.menu.Renderer;
+
 import java.awt.Color;
 
 import sim.simobject.Planet;
+import sim.simobject.Star;
 import sim.simobject.Sun;
 import sim.util.Point3D;
-import gui.menu.MainMenu;
-import gui.menu.Renderer;
 
 /**
  * @author Russell
@@ -41,6 +43,15 @@ public class SimRunner {
 		system.addSimObject(new Planet(6000000000000000000.0,
 				SolarSystem.ASTRONOMICAL_UNIT / 20, 10,
 				new Color(124, 255, 12), test, 1000));
+
+		for (int i = 0; i < 5000; i++) {
+			long x = (long) (Math.random() * 400000 - 200000);
+			long y = (long) (Math.random() * 400000 - 200000);
+			long z = (long) (Math.random() * 40000 - 20000);
+			int brightness = (int) (Math.random() * 255);
+
+			system.addSimObject(new Star(new Point3D(x, y, z), brightness));
+		}
 
 		Thread renderThread = new Thread(renderer);
 		renderThread.start();

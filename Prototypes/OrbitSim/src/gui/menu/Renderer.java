@@ -21,6 +21,7 @@ import org.lwjgl.util.glu.Sphere;
 import sim.SolarSystem;
 import sim.simobject.Planet;
 import sim.simobject.SimObject;
+import sim.simobject.Star;
 import sim.simobject.Sun;
 import sim.util.Point3D;
 
@@ -106,6 +107,13 @@ public class Renderer implements Runnable {
 				else
 					Renderer.renderSphere(p.getPosition(), PLANET_SIZE_MIN,
 							RENDER_SCALE);
+			} else if (o instanceof Star) {
+				Star s = (Star) o;
+				Renderer.setColor(s.getColor());
+				GL11.glBegin(GL11.GL_POINTS);
+				GL11.glVertex3f(s.getPosition().getX(), s.getPosition().getY(),
+						s.getPosition().getZ());
+				GL11.glEnd();
 			} else {
 				System.out.println("Unknown object type: " + o);
 			}
@@ -132,7 +140,7 @@ public class Renderer implements Runnable {
 		/** The minimal distance from the camera where objects are rendered. */
 		float zNear = 0.3f;
 		/** The maximal distance from the camera where objects are rendered. */
-		float zFar = 20000f;
+		float zFar = 200000f;
 		/** Defines the field of view. */
 		int fov = 90;
 
