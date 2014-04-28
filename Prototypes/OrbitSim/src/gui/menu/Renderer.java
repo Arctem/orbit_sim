@@ -40,6 +40,8 @@ public class Renderer implements Runnable {
 	private static final float PLANET_SIZE = 30f;
 
 	public static final int MENU_SIZE = 300;
+	public static Renderer renderer;
+
 	private ArrayList<GUIObject> guiObjects;
 
 	private float zoomLevel, zoomGoal;
@@ -64,6 +66,8 @@ public class Renderer implements Runnable {
 		this.zoomLevel = -100000f;
 		this.zoomGoal = -1000f;
 		this.xRotation = 0.0f;
+
+		Renderer.renderer = this;
 	}
 
 	public void run() {
@@ -85,7 +89,6 @@ public class Renderer implements Runnable {
 		// Render stuff.
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-		zoomGoal += Mouse.getDWheel() * 0.1f;
 		zoomLevel = (zoomGoal + zoomLevel * 2) / 3;
 
 		if (Mouse.isButtonDown(1))
@@ -197,6 +200,10 @@ public class Renderer implements Runnable {
 
 		lModelAmbient = BufferUtils.createFloatBuffer(4);
 		lModelAmbient.put(0.5f).put(0.5f).put(0.5f).put(1.0f).flip();
+	}
+
+	public void zoom(int zoomAmount) {
+		zoomGoal += zoomAmount * 20.0f;
 	}
 
 	public boolean isRunning() {

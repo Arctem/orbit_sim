@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import de.matthiasmann.twl.Button;
+import de.matthiasmann.twl.Event;
 import de.matthiasmann.twl.Widget;
 
 /**
@@ -28,6 +29,12 @@ public class MainMenu extends Widget implements GUIObject {
 
 		button = new Button("Click");
 		button.setTheme("button");
+		button.setTooltipContent("This is a test.");
+		button.addCallback(new Runnable() {
+			public void run() {
+				button.setText("D:");
+			}
+		});
 		this.add(button);
 
 	}
@@ -35,6 +42,16 @@ public class MainMenu extends Widget implements GUIObject {
 	protected void layout() {
 		button.setPosition(100, 100);
 		button.setSize(100, 33);
+	}
+
+	protected boolean handleEvent(Event e) {
+		boolean hitGUI = super.handleEvent(e);
+		System.out.println(hitGUI + ", " + e.getMouseButton() + ": "
+				+ e.getMouseWheelDelta());
+		if (e.getMouseWheelDelta() != 0) {
+			Renderer.renderer.zoom(e.getMouseWheelDelta());
+		}
+		return hitGUI;
 	}
 
 	public void update() {

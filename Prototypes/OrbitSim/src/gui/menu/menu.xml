@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <themes>
-	<fontDef name="normal" filename="font.fnt" color="white">
+	<fontDef name="normal" filename="font.fnt" color="black">
 		<fontParam if="error" color="red" />
 		<fontParam if="disabled" color="gray" />
 		<fontParam if="textSelection" color="blue" />
 	</fontDef>
+	
 	<inputMapDef name="-defaultInputMap">
 		<action name="selectAll">ctrl A</action>
 		<action name="cut">ctrl X</action>
@@ -66,9 +67,22 @@
 
 		<theme name="button" ref="-defaults">
 			<param name="background">
-				<image>button.*</image>
+				<image>button.background</image>
 			</param>
 		</theme>
+	</theme>
+
+	<theme name="tooltipwindow" ref="-defaults">
+		<param name="background">
+			<image>-frameH</image>
+		</param>
+		<param name="border">
+			<border>3</border>
+		</param>
+		<param name="fadeInTime">
+			<int>1000</int>
+		</param>
+		<theme name="label" ref="-defaults"></theme>
 	</theme>
 
 
