@@ -5,6 +5,7 @@ package sim.simobject;
 
 import java.awt.Color;
 
+import de.matthiasmann.twl.Button;
 import sim.util.Point3D;
 
 /**
@@ -26,6 +27,11 @@ public class Star extends ObjectInSpace {
 		super(0, 0, 0, 0, position, new Color(brightness, brightness,
 				brightness), null);
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public Button createButton() {
+		return null;
 	}
 
 
