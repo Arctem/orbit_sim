@@ -31,7 +31,7 @@ public class MainMenu extends Widget {
 
 	protected void layout() {
 		for (int i = 0; i < elements.size(); i++) {
-			elements.get(i).setPosition(50, i * 100);
+			elements.get(i).setPosition(50, 50 + i * 33);
 			elements.get(i).setSize(100, 33);
 		}
 	}
@@ -62,6 +62,7 @@ public class MainMenu extends Widget {
 			return;
 		button.setTheme("button");
 		this.elements.add(button);
+		this.add(button);
 	}
 
 }
