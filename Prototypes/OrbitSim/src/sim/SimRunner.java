@@ -114,7 +114,7 @@ public class SimRunner {
 			try {
 				Thread.sleep((lastLoopTime - System.nanoTime() + OPTIMAL_TIME) / 1000000);
 			} catch (InterruptedException e) {
-				System.exit(-1);
+				e.printStackTrace();
 			}
 
 		}

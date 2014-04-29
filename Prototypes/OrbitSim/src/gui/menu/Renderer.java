@@ -68,6 +68,7 @@ public class Renderer implements Runnable {
 			this.render();
 			Display.sync(60);
 		}
+		System.out.println("Display closing.");
 
 		Display.destroy();
 	}
@@ -191,7 +192,7 @@ public class Renderer implements Runnable {
 	}
 
 	public boolean isRunning() {
-		return !Display.isCloseRequested();
+		return Display.isCreated();
 	}
 
 	private static void renderSphere(float x, float y, float z, float radius) {
