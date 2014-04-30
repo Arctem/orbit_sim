@@ -20,14 +20,13 @@ import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
 
 import sim.SolarSystem;
+import sim.simobject.ObjectInSpace;
 import sim.simobject.Planet;
 import sim.simobject.SimObject;
 import sim.simobject.Star;
 import sim.simobject.Sun;
 import sim.util.Point3D;
-import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.GUI;
-import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.renderer.lwjgl.LWJGLRenderer;
 import de.matthiasmann.twl.theme.ThemeManager;
 
@@ -114,11 +113,12 @@ public class Renderer implements Runnable {
 				// Set the render mode to be line rendering with a thick line
 				// width
 				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-				GL11.glLineWidth(3.0f);
+				GL11.glLineWidth(2.0f);
 				// Render the object
-				Sun s = (Sun) o;
+				ObjectInSpace object = (ObjectInSpace) o;
 				Renderer.setColor(new Color(1.0f, 0.0f, 0.0f));
-				Renderer.renderSphere(s.getPosition(), SUN_SIZE, RENDER_SCALE);
+				Renderer.renderSphere(object.getPosition(),
+						Renderer.determineRenderSize(object) + 1, RENDER_SCALE);
 				// Set the polygon mode to be filled triangles
 				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 				GL11.glEnable(GL11.GL_LIGHTING);
@@ -130,19 +130,13 @@ public class Renderer implements Runnable {
 				// // to set things back how they were
 				GL11.glPopAttrib();
 			}
-			if (o instanceof Sun) {
-				Sun s = (Sun) o;
-				Renderer.setColor(s.getColor());
-				Renderer.renderSphere(s.getPosition(), SUN_SIZE, RENDER_SCALE);
-			} else if (o instanceof Planet) {
-				Planet p = (Planet) o;
-				Renderer.setColor(p.getColor());
-				if (p.getSun() instanceof Sun)
-					Renderer.renderSphere(p.getPosition(), PLANET_SIZE_MAX,
-							RENDER_SCALE);
-				else
-					Renderer.renderSphere(p.getPosition(), PLANET_SIZE_MIN,
-							RENDER_SCALE);
+
+			if (o instanceof Planet || o instanceof Sun) {
+				ObjectInSpace object = (ObjectInSpace) o;
+				Renderer.setColor(object.getColor());
+				Renderer.renderSphere(object.getPosition(),
+						Renderer.determineRenderSize(object), RENDER_SCALE);
+
 			} else if (o instanceof Star) {
 				Star s = (Star) o;
 				Renderer.setColor(s.getColor());
@@ -158,6 +152,22 @@ public class Renderer implements Runnable {
 		gui.update();
 
 		Display.update();
+	}
+
+	/**
+	 * @param object
+	 * @return
+	 */
+	private static float determineRenderSize(ObjectInSpace object) {
+		if (object instanceof Sun)
+			return Renderer.SUN_SIZE;
+		else if (object instanceof Planet) {
+			if (((Planet) object).getSun() instanceof Planet)
+				return Renderer.PLANET_SIZE_MIN;
+			else
+				return Renderer.PLANET_SIZE_MAX;
+		} else
+			return 1;
 	}
 
 	private void initGL() {
