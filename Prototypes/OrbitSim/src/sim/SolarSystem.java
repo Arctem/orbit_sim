@@ -70,18 +70,6 @@ public class SolarSystem {
 		}
 	}
 
-	public void start() {
-
-	}
-
-	public void stop() {
-
-	}
-
-	public void reset() {
-
-	}
-
 	public void save() {
 
 	}
