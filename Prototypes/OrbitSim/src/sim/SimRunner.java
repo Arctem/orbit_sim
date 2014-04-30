@@ -36,14 +36,15 @@ public class SimRunner {
 		system.addSimObject(sun);
 		Planet test = new Planet(60000000000000000000000000.0,
 				SolarSystem.ASTRONOMICAL_UNIT, 10, new Color(124, 255, 12),
-				sun, 2000);
+				sun, 2000, SolarSystem.ASTRONOMICAL_UNIT/3);
 		system.addSimObject(test);
 		system.addSimObject(new Planet(60000000000000000000000000.0,
 				SolarSystem.ASTRONOMICAL_UNIT * 3 / 2, 10, new Color(124, 255,
-						12), sun, 2000));
+						12), sun, 2000, 0));
 		system.addSimObject(new Planet(6000000000000000000.0,
 				SolarSystem.ASTRONOMICAL_UNIT / 20, 10,
-				new Color(124, 255, 12), test, 1000));
+				new Color(124, 255, 12), test, 1000, 0));
+		
 
 		for (int i = 0; i < 5000; i++) {
 			long x = (long) (Math.random() * 400000 - 200000);

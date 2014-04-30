@@ -22,6 +22,7 @@ public class Planet extends ObjectInSpace {
 	private long orbitRadius;
 	private double angularVelocity;
 	private double angle; // the angle the planet is at in radians
+	private long hMax = 0;
 
 	/**
 	 * @param mass
@@ -33,11 +34,12 @@ public class Planet extends ObjectInSpace {
 	 */
 	public Planet(double mass, long orbitRadius, long density, long velocity,
 			Point3D position, Color color, boolean habitable,
-			ObjectInSpace sun, long radius) {
+			ObjectInSpace sun, long radius, long maxTiltHeight) {
 		super(mass, radius, density, velocity, position, color, sun);
 		this.orbitRadius = 0;
 		this.habitable = habitable;
 		this.angle = 0;
+		hMax = maxTiltHeight;
 
 		setPeriod();
 		setAngularVelocity();
@@ -54,13 +56,14 @@ public class Planet extends ObjectInSpace {
 	 * @param sunMass
 	 */
 	public Planet(double mass, long orbitRadius, long density, Color color,
-			ObjectInSpace sun, long radius) {
+			ObjectInSpace sun, long radius, long maxTiltHeight) {
 		super(mass, radius, density, (long) Math.sqrt((6.67 * Math.pow(10,
 				(-11)) * sun.getMass()) / (double) orbitRadius), new Point3D(
 				orbitRadius, 0, 0), color, sun);
 		this.orbitRadius = orbitRadius;
 		this.angle = 0;
-
+		hMax = maxTiltHeight;
+		
 		setPeriod();
 		setAngularVelocity();
 	}
@@ -76,7 +79,7 @@ public class Planet extends ObjectInSpace {
 	 * @param velocity
 	 */
 	public Planet(double mass, long density, Color color, ObjectInSpace sun,
-			long velocity, long radius) {
+			long velocity, long radius, long maxTiltHeight) {
 		super(
 				mass,
 				radius,
@@ -88,6 +91,7 @@ public class Planet extends ObjectInSpace {
 		this.orbitRadius = (long) ((6.67 * Math.pow(10, (-11)) * sun.getMass()) / Math
 				.pow(velocity, 2));
 		this.angle = 0;
+		hMax = maxTiltHeight;
 
 		setPeriod();
 		setAngularVelocity();
@@ -155,6 +159,7 @@ public class Planet extends ObjectInSpace {
 
 		setPeriod();
 	}
+	
 
 	/**
 	 * calculates the new position of the planet after t seconds
@@ -165,30 +170,30 @@ public class Planet extends ObjectInSpace {
 	public void calculateNewPosition(long t) {
 		long x;
 		long y;
+		long z = 0;
 
 		angle += angularVelocity * t;
 		if(angle >= (2 * Math.PI)){
 			angle -= (2 * Math.PI);
 		}
 
-		x = (long) (this.orbitRadius * Math.cos(angle));
-		y = (long) (this.orbitRadius * Math.sin(angle));
+		// the z is for tilting, if no tilting, z = 0
+		z = (long) (hMax * Math.sin(angle));
+		
+		// if no tilting, the equation is orbitRadius * cos/sin(angle)
+		x = (long) (Math.sqrt(Math.pow(orbitRadius, 2) - Math.pow(z, 2)) * Math.cos(angle));
+		y = (long) (Math.sqrt(Math.pow(orbitRadius, 2) - Math.pow(z, 2)) * Math.sin(angle));
+		
 
 		// Adjust for if Sun is not in the center of the Universe i.e. another
 		// planet.
 		x += this.getSun().getPosition().getX();
 		y += this.getSun().getPosition().getY();
+		z += this.getSun().getPosition().getZ(); // if the planet is on a tilted orbit, follow it.
 
-		this.setPosition(x, y, 0);
+		this.setPosition(x, y, z);
 	}
 	
-	public void calculateNewPosition(long t, double tilt){
-		long x, y, z;
-		
-		calculateNewPosition(t);
-		
-		
-	}
 
 	@Override
 	public void step(long t) {
