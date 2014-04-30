@@ -10,6 +10,7 @@ import java.awt.Color;
 import sim.SolarSystem;
 import sim.util.Point3D;
 import de.matthiasmann.twl.Button;
+import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.Widget;
 
 /**
@@ -80,6 +81,11 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 
 			final ObjectInSpace t = this;
 
+			Label massInfo = new Label("Mass: " + this.getMass() + " kg");
+			detailedMenu.add(massInfo);
+			massInfo.setSize(120, 33);
+			massInfo.setPosition(0, 0);
+
 			Button plusMass = new Button("Increase Mass");
 			plusMass.setTooltipContent("Double the mass.");
 			plusMass.addCallback(new Runnable() {
@@ -90,7 +96,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 			});
 			detailedMenu.add(plusMass);
 			plusMass.setSize(100, 33);
-			plusMass.setPosition(0, 0);
+			plusMass.setPosition(massInfo.getWidth(), 0);
 
 			Button minusMass = new Button("Decrease Mass");
 			minusMass.setTooltipContent("Halve the mass.");
@@ -102,7 +108,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 			});
 			detailedMenu.add(minusMass);
 			minusMass.setSize(100, 33);
-			minusMass.setPosition(100, 0);
+			minusMass.setPosition(massInfo.getWidth() + plusMass.getWidth(), 0);
 		}
 		return detailedMenu;
 	}

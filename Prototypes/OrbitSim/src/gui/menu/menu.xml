@@ -5,6 +5,11 @@
 		<fontParam if="disabled" color="gray" />
 		<fontParam if="textSelection" color="blue" />
 	</fontDef>
+	<fontDef name="normalwhite" filename="font.fnt" color="white">
+		<fontParam if="error" color="red" />
+		<fontParam if="disabled" color="gray" />
+		<fontParam if="textSelection" color="blue" />
+	</fontDef>
 
 	<inputMapDef name="-defaultInputMap">
 		<action name="selectAll">ctrl A</action>
@@ -75,6 +80,11 @@
 			<theme name="button" ref="-defaults">
 				<param name="background">
 					<image>button.background</image>
+				</param>
+			</theme>
+			<theme name="label" ref="-defaults">
+				<param name="font">
+					<font>normalwhite</font>
 				</param>
 			</theme>
 		</theme>
