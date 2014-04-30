@@ -5,6 +5,7 @@ package sim.simobject;
 
 import java.awt.Graphics2D;
 
+import de.matthiasmann.twl.Widget;
 import gui.GUIObject;
 
 /**
@@ -39,6 +40,17 @@ public class AsteroidBelt implements SimObject {
 	public void step(long t) {
 		// TODO Auto-generated method stub
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sim.simobject.SimObject#getDetailedMenu()
+	 */
+	@Override
+	public Widget getDetailedMenu() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

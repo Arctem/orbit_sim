@@ -3,12 +3,10 @@
  */
 package gui.menu;
 
-import gui.GUIObject;
-
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import sim.SolarSystem;
+import sim.simobject.SimObject;
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.Event;
 import de.matthiasmann.twl.Widget;
@@ -20,6 +18,7 @@ import de.matthiasmann.twl.Widget;
 public class MainMenu extends Widget {
 
 	private ArrayList<Button> elements;
+	private SimObject lastSelection;
 	private SolarSystem solarSystem;
 
 	/**
@@ -27,6 +26,8 @@ public class MainMenu extends Widget {
 	 */
 	public MainMenu() {
 		this.elements = new ArrayList<Button>();
+		this.lastSelection = null;
+		this.solarSystem = null;
 	}
 
 	protected void layout() {
@@ -34,19 +35,17 @@ public class MainMenu extends Widget {
 			elements.get(i).setPosition(50, 50 + i * 33);
 			elements.get(i).setSize(100, 33);
 		}
+		this.updateDetailedMenu();
 	}
 
 	protected boolean handleEvent(Event e) {
 		boolean hitGUI = super.handleEvent(e);
 
-		System.out.println("event.");
 		if (e.getKeyChar() == '+' || e.getKeyChar() == '=') {
 			this.solarSystem.setTimeScale(2 * this.solarSystem.getTimeScale());
 		} else if (e.getKeyChar() == '-') {
 			this.solarSystem.setTimeScale(this.solarSystem.getTimeScale() / 2);
 		}
-
-		System.out.println(this.solarSystem.getTimeScale());
 
 		if (e.getMouseWheelDelta() != 0) {
 			Renderer.renderer.zoom(e.getMouseWheelDelta());
@@ -54,8 +53,18 @@ public class MainMenu extends Widget {
 		return hitGUI;
 	}
 
-	public void update() {
+	public void updateDetailedMenu() {
+		if (this.solarSystem.getSelectedObject() != this.lastSelection) {
+			if (this.lastSelection != null)
+				this.removeChild(this.lastSelection.getDetailedMenu());
 
+			this.lastSelection = this.solarSystem.getSelectedObject();
+
+			Widget detailedMenu = this.lastSelection.getDetailedMenu();
+			this.add(detailedMenu);
+			detailedMenu.adjustSize();
+			detailedMenu.setPosition(0, 33 * elements.size() + 50 + 20);
+		}
 	}
 
 	public SolarSystem getSolarSystem() {

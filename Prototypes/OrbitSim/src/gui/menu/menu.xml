@@ -5,7 +5,7 @@
 		<fontParam if="disabled" color="gray" />
 		<fontParam if="textSelection" color="blue" />
 	</fontDef>
-	
+
 	<inputMapDef name="-defaultInputMap">
 		<action name="selectAll">ctrl A</action>
 		<action name="cut">ctrl X</action>
@@ -69,6 +69,14 @@
 			<param name="background">
 				<image>button.background</image>
 			</param>
+		</theme>
+
+		<theme name="widget" ref="-defaults">
+			<theme name="button" ref="-defaults">
+				<param name="background">
+					<image>button.background</image>
+				</param>
+			</theme>
 		</theme>
 	</theme>
 

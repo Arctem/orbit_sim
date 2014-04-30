@@ -9,6 +9,7 @@ import gui.menu.MainMenu;
 import java.util.ArrayList;
 
 import sim.simobject.ObjectInSpace;
+import sim.simobject.Planet;
 import sim.simobject.SimObject;
 
 /**
@@ -139,6 +140,17 @@ public class SolarSystem {
 			this.mainMenu.addButton(((GUIObject) simObject).createButton());
 	}
 
+	public void updateOrbitersOf(SimObject simObject) {
+		for (SimObject o : this.simObjects) {
+			if (o instanceof Planet) {
+				if (((Planet) o).getSun() == simObject) {
+					((Planet) o).setPeriod();
+					((Planet) o).setAngularVelocity();
+				}
+			}
+		}
+	}
+
 	/**
 	 * @return the daysElapsed
 	 */
@@ -166,5 +178,6 @@ public class SolarSystem {
 
 	public void setSelectedObject(SimObject selectedObject) {
 		this.selectedObject = selectedObject;
+		this.mainMenu.updateDetailedMenu();
 	}
 }

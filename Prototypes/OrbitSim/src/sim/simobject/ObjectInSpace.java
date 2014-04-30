@@ -10,6 +10,7 @@ import java.awt.Color;
 import sim.SolarSystem;
 import sim.util.Point3D;
 import de.matthiasmann.twl.Button;
+import de.matthiasmann.twl.Widget;
 
 /**
  * @author russell, AJ
@@ -25,6 +26,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	private Point3D position;
 	private Color color;
 	private SolarSystem parent;
+	private Widget detailedMenu;
 
 	/**
 	 * @param mass
@@ -66,6 +68,43 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		});
 
 		return b;
+	}
+
+	/**
+	 * @return
+	 */
+	public Widget getDetailedMenu() {
+		if (detailedMenu == null) {
+
+			detailedMenu = new Widget();
+
+			final ObjectInSpace t = this;
+
+			Button plusMass = new Button("Increase Mass");
+			plusMass.setTooltipContent("Double the mass.");
+			plusMass.addCallback(new Runnable() {
+				@Override
+				public void run() {
+					t.setMass(t.getMass() * 2);
+				}
+			});
+			detailedMenu.add(plusMass);
+			plusMass.setSize(100, 33);
+			plusMass.setPosition(0, 0);
+
+			Button minusMass = new Button("Decrease Mass");
+			minusMass.setTooltipContent("Halve the mass.");
+			minusMass.addCallback(new Runnable() {
+				@Override
+				public void run() {
+					t.setMass(t.getMass() / 2);
+				}
+			});
+			detailedMenu.add(minusMass);
+			minusMass.setSize(100, 33);
+			minusMass.setPosition(100, 0);
+		}
+		return detailedMenu;
 	}
 
 	/**
@@ -148,6 +187,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 
 	public void setMass(double mass) {
 		this.mass = mass;
+		this.parent.updateOrbitersOf(this);
 	}
 
 	/**
