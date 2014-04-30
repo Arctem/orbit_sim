@@ -103,6 +103,33 @@ public class Renderer implements Runnable {
 		GL11.glRotatef(xRotation, 0f, 0f, 1f);
 
 		for (SimObject o : solarSystem.getSimObjects()) {
+			if (o == solarSystem.getSelectedObject()) {
+				// Push the GL attribute bits so that we don't wreck any
+				// settings
+				GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
+				// Enable polygon offsets, and offset filled polygons forward by
+				// 2.5
+				GL11.glEnable(GL11.GL_POLYGON_OFFSET_FILL);
+				GL11.glPolygonOffset(-2.5f, -2.5f);
+				// Set the render mode to be line rendering with a thick line
+				// width
+				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
+				GL11.glLineWidth(3.0f);
+				// Render the object
+				Sun s = (Sun) o;
+				Renderer.setColor(new Color(1.0f, 0.0f, 0.0f));
+				Renderer.renderSphere(s.getPosition(), SUN_SIZE, RENDER_SCALE);
+				// Set the polygon mode to be filled triangles
+				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+				GL11.glEnable(GL11.GL_LIGHTING);
+				// // Set the colour to the background
+				// GL11.glColor3f(0.0f, 0.0f, 0.0f);
+				// // Render the object
+				// GL11.RenderMesh3();
+				// // Pop the state changes off the attribute stack
+				// // to set things back how they were
+				GL11.glPopAttrib();
+			}
 			if (o instanceof Sun) {
 				Sun s = (Sun) o;
 				Renderer.setColor(s.getColor());
