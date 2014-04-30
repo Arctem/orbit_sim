@@ -73,7 +73,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	}
 
 	/**
-	 * @return
+	 * @return A detailed menu of ways to manipulate this object.
 	 */
 	public Widget getDetailedMenu() {
 		if (detailedMenu == null || menuDirty) {
@@ -194,6 +194,13 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		this.sun = sun;
 	}
 
+	/**
+	 * Change this object's mass and update orbits of all objects orbitting
+	 * this.
+	 * 
+	 * @param mass
+	 *            The new mass.
+	 */
 	public void setMass(double mass) {
 		this.mass = mass;
 		this.parent.updateOrbitersOf(this);
@@ -201,7 +208,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	}
 
 	/**
-	 * se the position of the object
+	 * the position of the object
 	 * 
 	 * @param position
 	 *            the position to set it to
@@ -224,6 +231,9 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		this.position.setXYZ(x, y, z);
 	}
 
+	/**
+	 * @return Solar system this belongs to.
+	 */
 	public SolarSystem getParent() {
 		return parent;
 	}
@@ -232,10 +242,24 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 		this.parent = parent;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sim.simobject.SimObject#isMenuDirty()
+	 * 
+	 * Indicate whether the menu needs to be updated.
+	 */
 	public boolean isMenuDirty() {
 		return menuDirty;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sim.simobject.SimObject#setMenuDirty(boolean)
+	 * 
+	 * Indicate whether the menu needs to be updated.
+	 */
 	public void setMenuDirty(boolean menuDirty) {
 		this.menuDirty = menuDirty;
 	}

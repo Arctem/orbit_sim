@@ -5,15 +5,15 @@ package gui.menu;
 
 import gui.GUIObject;
 
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import de.matthiasmann.twl.Button;
 import sim.simobject.SimObject;
+import de.matthiasmann.twl.Button;
 
 /**
- * @author russell
+ * Currently unused.
  * 
+ * @author russell
  */
 public class Menu implements GUIObject {
 

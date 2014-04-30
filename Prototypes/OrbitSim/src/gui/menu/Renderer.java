@@ -40,14 +40,15 @@ public class Renderer implements Runnable {
 	private static final float PLANET_SIZE_MAX = 25f;
 	private static final float PLANET_SIZE_MIN = 10f;
 
-	public static final int MENU_SIZE = 300;
+	/**
+	 * The Renderer object - only one can exist at once.
+	 */
 	public static Renderer renderer;
 
 	private ArrayList<GUIObject> guiObjects;
 
 	private float zoomLevel, zoomGoal;
 	private float xRotation;
-	private float rotationRate = 0.2f;
 
 	private SolarSystem solarSystem;
 	private MainMenu mainMenu;
@@ -60,6 +61,14 @@ public class Renderer implements Runnable {
 	private static FloatBuffer matSpecular, lightPosition, whiteLight,
 			lModelAmbient;
 
+	/**
+	 * Creates a Renderer object to handle graphics.
+	 * 
+	 * @param mainMenu
+	 *            The main menu that handles user input and will be displayed.
+	 * @param solarSystem
+	 *            The main simulation controller.
+	 */
 	public Renderer(MainMenu mainMenu, SolarSystem solarSystem) {
 		this.mainMenu = mainMenu;
 		this.solarSystem = solarSystem;
@@ -71,6 +80,13 @@ public class Renderer implements Runnable {
 		Renderer.renderer = this;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Runnable#run()
+	 * 
+	 * Start the execution of the main project. Handles LWJGL initiation.
+	 */
 	public void run() {
 		synchronized (this.solarSystem) {
 			this.initGL();
@@ -87,6 +103,9 @@ public class Renderer implements Runnable {
 		Display.destroy();
 	}
 
+	/**
+	 * Handles rendering of all objects.
+	 */
 	public void render() {
 		// Render stuff.
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
@@ -157,7 +176,9 @@ public class Renderer implements Runnable {
 
 	/**
 	 * @param object
-	 * @return
+	 *            Object that has an unknown render size. Currently only Sun and
+	 *            Planet are recognized.
+	 * @return The render size of the object. Non-Sun and Planets are of size 1.
 	 */
 	private static float determineRenderSize(ObjectInSpace object) {
 		if (object instanceof Sun)
@@ -171,6 +192,9 @@ public class Renderer implements Runnable {
 			return 1;
 	}
 
+	/**
+	 * Initialize window and rendering mode.
+	 */
 	private void initGL() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1600, 1000));
@@ -200,6 +224,9 @@ public class Renderer implements Runnable {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 	}
 
+	/**
+	 * Initializing lighting engine.
+	 */
 	private void initLighting() {
 		initLightArrays();
 		GL11.glShadeModel(GL11.GL_SMOOTH);
@@ -218,6 +245,9 @@ public class Renderer implements Runnable {
 		GL11.glColorMaterial(GL11.GL_FRONT, GL11.GL_AMBIENT_AND_DIFFUSE);
 	}
 
+	/**
+	 * Initialize the GUI using MainMenu.
+	 */
 	private void initGUI() {
 		try {
 			this.guiRenderer = new LWJGLRenderer();
@@ -238,7 +268,9 @@ public class Renderer implements Runnable {
 
 	}
 
-	// ------- Added for Lighting Test----------//
+	/**
+	 * Initialize various values for lighting.
+	 */
 	private void initLightArrays() {
 		matSpecular = BufferUtils.createFloatBuffer(4);
 		matSpecular.put(1.0f).put(1.0f).put(1.0f).put(1.0f).flip();
@@ -253,14 +285,33 @@ public class Renderer implements Runnable {
 		lModelAmbient.put(0.5f).put(0.5f).put(0.5f).put(1.0f).flip();
 	}
 
+	/**
+	 * @param zoomAmount
+	 *            How many levels to adjust zoom by.
+	 */
 	public void zoom(int zoomAmount) {
 		zoomGoal += zoomAmount * 20.0f;
 	}
 
+	/**
+	 * @return Whether the Display is active.
+	 */
 	public boolean isRunning() {
 		return Display.isCreated();
 	}
 
+	/**
+	 * Draws a sphere of the given size.
+	 * 
+	 * @param x
+	 *            x sphere location.
+	 * @param y
+	 *            y sphere location.
+	 * @param z
+	 *            z sphere location.
+	 * @param radius
+	 *            Radius of the sphere.
+	 */
 	private static void renderSphere(float x, float y, float z, float radius) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef(x, y, z);
@@ -269,33 +320,58 @@ public class Renderer implements Runnable {
 		GL11.glPopMatrix();
 	}
 
+	/**
+	 * Scales the location and then uses the other renderSphere method.
+	 * 
+	 * @param position
+	 *            Position of the sphere.
+	 * @param radius
+	 *            Radius of the sphere.
+	 * @param scalar
+	 *            Scales the position so that things aren't ridiculously spread
+	 *            out.
+	 */
 	private static void renderSphere(Point3D position, float radius,
 			float scalar) {
 		Renderer.renderSphere(position.getX() * scalar, position.getY()
 				* scalar, position.getZ() * scalar, radius);
 	}
 
+	/**
+	 * @param color
+	 *            Set the current rendering color.
+	 */
 	private static void setColor(Color color) {
 		GL11.glColor3f(color.getRed() / (float) 255, color.getGreen()
 				/ (float) 255, color.getBlue() / (float) 255);
 	}
 
-	public void stop() {
-
-	}
-
+	/**
+	 * @return The solar system.
+	 */
 	public SolarSystem getSolarSystem() {
 		return solarSystem;
 	}
 
+	/**
+	 * @param solarSystem
+	 *            The solar system to set.
+	 */
 	public void setSolarSystem(SolarSystem solarSystem) {
 		this.solarSystem = solarSystem;
 	}
 
+	/**
+	 * @return The current main menu.
+	 */
 	public MainMenu getMainMenu() {
 		return mainMenu;
 	}
 
+	/**
+	 * @param mainMenu
+	 *            The main menu to set.
+	 */
 	public void setMainMenu(MainMenu mainMenu) {
 		this.mainMenu = mainMenu;
 	}

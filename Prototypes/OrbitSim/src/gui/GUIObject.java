@@ -10,5 +10,10 @@ import de.matthiasmann.twl.Button;
  * 
  */
 public interface GUIObject {
+	/**
+	 * Generate a button to select this object.
+	 * 
+	 * @return
+	 */
 	public Button createButton();
 }

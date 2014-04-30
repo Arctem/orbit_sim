@@ -50,6 +50,9 @@ public class SolarSystem {
 		yearsElapsed = 0;
 	}
 
+	/**
+	 * Step all objects forward by the set timescale.
+	 */
 	public void step() {
 		for (SimObject o : simObjects) {
 			o.step(timeScale);
@@ -71,28 +74,13 @@ public class SolarSystem {
 		}
 	}
 
-	public void start() {
-
-	}
-
-	public void stop() {
-
-	}
-
-	public void reset() {
-
-	}
-
-	public void save() {
-
-	}
-
+	/**
+	 * Load a saved solar system. Unimplemented.
+	 * 
+	 * @return The loaded solar system.
+	 */
 	public static SolarSystem load() {
 		return null;
-	}
-
-	public void destroy() {
-
 	}
 
 	/**
@@ -132,6 +120,10 @@ public class SolarSystem {
 		return simObjects;
 	}
 
+	/**
+	 * @param simObject
+	 *            simObject to add to the simulation.
+	 */
 	public void addSimObject(SimObject simObject) {
 		this.simObjects.add(simObject);
 		if (simObject instanceof ObjectInSpace)
@@ -140,6 +132,11 @@ public class SolarSystem {
 			this.mainMenu.addButton(((GUIObject) simObject).createButton());
 	}
 
+	/**
+	 * @param simObject
+	 *            Update the orbit rates of all orbiters of an object that has
+	 *            changed.
+	 */
 	public void updateOrbitersOf(SimObject simObject) {
 		for (SimObject o : this.simObjects) {
 			if (o instanceof Planet) {
@@ -172,10 +169,19 @@ public class SolarSystem {
 		return yearsElapsed;
 	}
 
+	/**
+	 * @return The selected object.
+	 */
 	public SimObject getSelectedObject() {
 		return selectedObject;
 	}
 
+	/**
+	 * Select a new object and notify the mainMenu.
+	 * 
+	 * @param selectedObject
+	 *            Object to select.
+	 */
 	public void setSelectedObject(SimObject selectedObject) {
 		this.selectedObject = selectedObject;
 		this.mainMenu.updateDetailedMenu();

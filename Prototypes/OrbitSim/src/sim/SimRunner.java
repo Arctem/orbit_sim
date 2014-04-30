@@ -61,12 +61,10 @@ public class SimRunner {
 		try {
 			Thread.sleep(20);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		// Definitely waits for window to be ready.
 		synchronized (system) {
-			system.start();
 		}
 
 		long lastLoopTime = System.nanoTime();
@@ -103,11 +101,6 @@ public class SimRunner {
 			// system.step(delta);
 
 			system.step();
-
-			// testing printing out statistics for time elapsed
-			// System.out.println("\n" + system.getDaysElapsed() + ", " +
-			// system.getMonthsElapsed() +
-			// ", " + system.getYearsElapsed() + "\n");
 
 			// we want each frame to take 10 milliseconds, to do this
 			// we've recorded when we started the frame. We add 10 milliseconds
