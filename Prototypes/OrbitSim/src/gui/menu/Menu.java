@@ -8,6 +8,7 @@ import gui.GUIObject;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import de.matthiasmann.twl.Button;
 import sim.simobject.SimObject;
 
 /**
@@ -43,28 +44,6 @@ public class Menu implements GUIObject {
 	}
 
 	public void update() {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see gui.GUIObject#render(java.awt.Graphics2D)
-	 */
-	@Override
-	public void render(Graphics2D g) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see gui.GUIObject#create()
-	 */
-	@Override
-	public void create() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -107,6 +86,17 @@ public class Menu implements GUIObject {
 
 	public void addElement(MenuElement element) {
 		this.elements.add(element);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gui.GUIObject#createButton()
+	 */
+	@Override
+	public Button createButton() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

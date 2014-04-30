@@ -6,22 +6,25 @@ package sim.simobject;
 import gui.GUIObject;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
+import sim.SolarSystem;
 import sim.util.Point3D;
+import de.matthiasmann.twl.Button;
 
 /**
  * @author russell, AJ
  * 
- * This is an abstract class that contains all the information needed for each object in space
- * Every object, like planets, suns, and others inherit from this class.
+ *         This is an abstract class that contains all the information needed
+ *         for each object in space Every object, like planets, suns, and others
+ *         inherit from this class.
  */
-public abstract class ObjectInSpace implements SimObject{
+public abstract class ObjectInSpace implements SimObject, GUIObject {
 	private long radius, density, velocity;
 	private double mass;
 	private ObjectInSpace sun;
 	private Point3D position;
 	private Color color;
+	private SolarSystem parent;
 
 	/**
 	 * @param mass
@@ -41,14 +44,38 @@ public abstract class ObjectInSpace implements SimObject{
 		this.position = position;
 		this.color = color;
 		this.sun = sun;
+		this.parent = null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gui.GUIObject#createButton()
+	 */
+	@Override
+	public Button createButton() {
+		Button b = new Button(this.getClass().getName());
+		b.setTooltipContent(this.toString());
+		final ObjectInSpace t = this; // There's gotta be a better way to do
+										// that.
+		b.addCallback(new Runnable() {
+			@Override
+			public void run() {
+				parent.setSelectedObject(t);
+			}
+		});
+
+		return b;
 	}
 
 	/**
 	 * Perform calculations on each step of the simulation
-	 * @param t the time elapsed in the step in seconds
+	 * 
+	 * @param t
+	 *            the time elapsed in the step in seconds
 	 */
 	public void step(long t) {
-		
+
 	}
 
 	/**
@@ -64,12 +91,13 @@ public abstract class ObjectInSpace implements SimObject{
 	public long getRadius() {
 		return radius;
 	}
-	
+
 	/**
 	 * sets the radius
+	 * 
 	 * @param radius
 	 */
-	public void setRadius(long radius){
+	public void setRadius(long radius) {
 		this.radius = radius;
 	}
 
@@ -79,12 +107,13 @@ public abstract class ObjectInSpace implements SimObject{
 	public long getDensity() {
 		return density;
 	}
-	
+
 	/**
 	 * sets the velocity
+	 * 
 	 * @param velocity
 	 */
-	public void setVelocity(long velocity){
+	public void setVelocity(long velocity) {
 		this.velocity = velocity;
 	}
 
@@ -123,20 +152,34 @@ public abstract class ObjectInSpace implements SimObject{
 
 	/**
 	 * se the position of the object
-	 * @param position the position to set it to
+	 * 
+	 * @param position
+	 *            the position to set it to
 	 */
 	public void setPosition(Point3D position) {
 		this.position = position;
 	}
-	
+
 	/**
 	 * set the Cartesian position of the object
-	 * @param x the x coordinate
-	 * @param y the y coordinate
-	 * @param z the z coordinate
+	 * 
+	 * @param x
+	 *            the x coordinate
+	 * @param y
+	 *            the y coordinate
+	 * @param z
+	 *            the z coordinate
 	 */
-	public void setPosition(long x, long y, long z){
+	public void setPosition(long x, long y, long z) {
 		this.position.setXYZ(x, y, z);
+	}
+
+	public SolarSystem getParent() {
+		return parent;
+	}
+
+	public void setParent(SolarSystem parent) {
+		this.parent = parent;
 	}
 
 }

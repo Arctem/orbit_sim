@@ -4,15 +4,15 @@
 package sim.simobject;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 import sim.util.Point3D;
+import de.matthiasmann.twl.Button;
 
 /**
  * @author russell, AJ
  * 
- * Each object of this is a planet. A planet can either orbit a sun
- * or it can orbit another planet, making it a moon. 
+ *         Each object of this is a planet. A planet can either orbit a sun or
+ *         it can orbit another planet, making it a moon.
  */
 
 public class Planet extends ObjectInSpace {
@@ -63,7 +63,7 @@ public class Planet extends ObjectInSpace {
 		this.orbitRadius = orbitRadius;
 		this.angle = 0;
 		hMax = maxTiltHeight;
-		
+
 		setPeriod();
 		setAngularVelocity();
 	}
@@ -159,7 +159,6 @@ public class Planet extends ObjectInSpace {
 
 		setPeriod();
 	}
-	
 
 	/**
 	 * calculates the new position of the planet after t seconds
@@ -173,33 +172,41 @@ public class Planet extends ObjectInSpace {
 		long z = 0;
 
 		angle += angularVelocity * t;
-		if(angle >= (2 * Math.PI)){
+		if (angle >= (2 * Math.PI)) {
 			angle -= (2 * Math.PI);
 		}
 
 		// the z is for tilting, if no tilting, z = 0
 		z = (long) (hMax * Math.sin(angle));
-		
+
 		// if no tilting, the equation is orbitRadius * cos/sin(angle)
-		x = (long) (Math.sqrt(Math.pow(orbitRadius, 2) - Math.pow(z, 2)) * Math.cos(angle));
-		y = (long) (Math.sqrt(Math.pow(orbitRadius, 2) - Math.pow(z, 2)) * Math.sin(angle));
-		
+		x = (long) (Math.sqrt(Math.pow(orbitRadius, 2) - Math.pow(z, 2)) * Math
+				.cos(angle));
+		y = (long) (Math.sqrt(Math.pow(orbitRadius, 2) - Math.pow(z, 2)) * Math
+				.sin(angle));
 
 		// Adjust for if Sun is not in the center of the Universe i.e. another
 		// planet.
 		x += this.getSun().getPosition().getX();
 		y += this.getSun().getPosition().getY();
-		z += this.getSun().getPosition().getZ(); // if the planet is on a tilted orbit, follow it.
+		z += this.getSun().getPosition().getZ(); // if the planet is on a tilted
+													// orbit, follow it.
 
 		this.setPosition(x, y, z);
 	}
-	
+
+	public void calculateNewPosition(long t, double tilt) {
+		long x, y, z;
+
+		calculateNewPosition(t);
+
+	}
 
 	@Override
 	public void step(long t) {
 		super.step(t);
 
 		calculateNewPosition(t);
-	} 
+	}
 
 }

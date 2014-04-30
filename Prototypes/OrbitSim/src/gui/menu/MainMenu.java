@@ -17,33 +17,23 @@ import de.matthiasmann.twl.Widget;
  * @author russell
  * 
  */
-public class MainMenu extends Widget implements GUIObject {
+public class MainMenu extends Widget {
 
-	private ArrayList<MenuElement> elements;
-	private Button button;
+	private ArrayList<Button> elements;
 	private SolarSystem solarSystem;
 
 	/**
 	 * 
 	 */
 	public MainMenu() {
-		this.elements = new ArrayList<MenuElement>();
-
-		button = new Button("Click");
-		button.setTheme("button");
-		button.setTooltipContent("This is a test.");
-		button.addCallback(new Runnable() {
-			public void run() {
-				button.setText("D:");
-			}
-		});
-		this.add(button);
-
+		this.elements = new ArrayList<Button>();
 	}
 
 	protected void layout() {
-		button.setPosition(100, 100);
-		button.setSize(100, 33);
+		for (int i = 0; i < elements.size(); i++) {
+			elements.get(i).setPosition(50, 50 + i * 33);
+			elements.get(i).setSize(100, 33);
+		}
 	}
 
 	protected boolean handleEvent(Event e) {
@@ -59,34 +49,20 @@ public class MainMenu extends Widget implements GUIObject {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see gui.GUIObject#render(java.awt.Graphics2D)
-	 */
-	@Override
-	public void render(Graphics2D g) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see gui.GUIObject#create()
-	 */
-	@Override
-	public void create() {
-		// TODO Auto-generated method stub
-
-	}
-
 	public SolarSystem getSolarSystem() {
 		return solarSystem;
 	}
 
 	public void setSolarSystem(SolarSystem solarSystem) {
 		this.solarSystem = solarSystem;
+	}
+
+	public void addButton(Button button) {
+		if (button == null)
+			return;
+		button.setTheme("button");
+		this.elements.add(button);
+		this.add(button);
 	}
 
 }
