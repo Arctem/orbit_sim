@@ -67,7 +67,7 @@ public class SimRunner {
 		}
 
 		synchronized (system) {
-			system.start();
+			//Make sure Display is ready.
 		}
 
 		long lastLoopTime = System.nanoTime();
