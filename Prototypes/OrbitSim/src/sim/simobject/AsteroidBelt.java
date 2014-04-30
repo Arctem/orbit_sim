@@ -15,6 +15,7 @@ import gui.GUIObject;
 public class AsteroidBelt implements SimObject {
 
 	private int asteroidCount, avgSize, innerRad, outerRad;
+	protected boolean menuDirty;
 
 	/**
 	 * @param asteroidCount
@@ -51,6 +52,27 @@ public class AsteroidBelt implements SimObject {
 	public Widget getDetailedMenu() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sim.simobject.SimObject#isMenuDirty()
+	 */
+	@Override
+	public boolean isMenuDirty() {
+		// TODO Auto-generated method stub
+		return this.menuDirty;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sim.simobject.SimObject#setMenuDirty(boolean)
+	 */
+	@Override
+	public void setMenuDirty(boolean menuDirty) {
+		this.menuDirty = menuDirty;
 	}
 
 }

@@ -149,6 +149,7 @@ public class Renderer implements Runnable {
 			}
 		}
 
+		this.mainMenu.update();
 		gui.update();
 
 		Display.update();

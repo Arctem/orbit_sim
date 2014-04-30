@@ -27,7 +27,8 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	private Point3D position;
 	private Color color;
 	private SolarSystem parent;
-	private Widget detailedMenu;
+	protected Widget detailedMenu;
+	protected boolean menuDirty;
 
 	/**
 	 * @param mass
@@ -75,7 +76,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	 * @return
 	 */
 	public Widget getDetailedMenu() {
-		if (detailedMenu == null) {
+		if (detailedMenu == null || menuDirty) {
 
 			detailedMenu = new Widget();
 
@@ -109,6 +110,8 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 			detailedMenu.add(minusMass);
 			minusMass.setSize(100, 33);
 			minusMass.setPosition(massInfo.getWidth() + plusMass.getWidth(), 0);
+
+			this.menuDirty = false;
 		}
 		return detailedMenu;
 	}
@@ -194,6 +197,7 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 	public void setMass(double mass) {
 		this.mass = mass;
 		this.parent.updateOrbitersOf(this);
+		this.menuDirty = true;
 	}
 
 	/**
@@ -226,6 +230,14 @@ public abstract class ObjectInSpace implements SimObject, GUIObject {
 
 	public void setParent(SolarSystem parent) {
 		this.parent = parent;
+	}
+
+	public boolean isMenuDirty() {
+		return menuDirty;
+	}
+
+	public void setMenuDirty(boolean menuDirty) {
+		this.menuDirty = menuDirty;
 	}
 
 }

@@ -7,7 +7,7 @@ import de.matthiasmann.twl.Widget;
 
 /**
  * @author russell
- *
+ * 
  */
 public interface SimObject {
 	public void step(long timeScale);
@@ -16,4 +16,9 @@ public interface SimObject {
 	 * @return
 	 */
 	public Widget getDetailedMenu();
+
+	public boolean isMenuDirty();
+
+	public void setMenuDirty(boolean menuDirty);
+
 }

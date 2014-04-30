@@ -19,6 +19,7 @@ public class MainMenu extends Widget {
 
 	private ArrayList<Button> elements;
 	private SimObject lastSelection;
+	private Widget detailedMenu;
 	private SolarSystem solarSystem;
 
 	/**
@@ -53,15 +54,25 @@ public class MainMenu extends Widget {
 		return hitGUI;
 	}
 
+	public void update() {
+		if (this.solarSystem.getSelectedObject() != null
+				&& this.solarSystem.getSelectedObject().isMenuDirty())
+			this.updateDetailedMenu();
+	}
+
 	public void updateDetailedMenu() {
-		if (this.solarSystem.getSelectedObject() != this.lastSelection) {
-			if (this.lastSelection != null)
-				this.removeChild(this.lastSelection.getDetailedMenu());
+		if (this.solarSystem.getSelectedObject() != this.lastSelection
+				|| (this.solarSystem.getSelectedObject() != null && this.solarSystem
+						.getSelectedObject().isMenuDirty())) {
+
+			if (this.detailedMenu != null)
+				this.removeChild(this.detailedMenu);
 
 			this.lastSelection = this.solarSystem.getSelectedObject();
 
 			Widget detailedMenu = this.lastSelection.getDetailedMenu();
 			this.add(detailedMenu);
+			this.detailedMenu = detailedMenu;
 			detailedMenu.adjustSize();
 			detailedMenu.setPosition(0, 33 * elements.size() + 50 + 20);
 		}
