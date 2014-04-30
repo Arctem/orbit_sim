@@ -7,6 +7,8 @@ import java.awt.Color;
 
 import sim.util.Point3D;
 import de.matthiasmann.twl.Button;
+import de.matthiasmann.twl.Label;
+import de.matthiasmann.twl.Widget;
 
 /**
  * @author russell, AJ
@@ -133,10 +135,13 @@ public class Planet extends ObjectInSpace {
 	 * @param radius
 	 */
 	public void setOrbitRadius(long radius) {
-		super.setRadius(radius);
+		// super.setRadius(radius);
+		this.orbitRadius = radius;
 		super.setVelocity((long) Math.sqrt((double) (getRadius()
 				* Math.pow(getVelocity(), 2) / (double) radius)));
 		setPeriod();
+		setAngularVelocity();
+		this.setMenuDirty(true);
 	}
 
 	/**
@@ -207,6 +212,52 @@ public class Planet extends ObjectInSpace {
 		super.step(t);
 
 		calculateNewPosition(t);
+	}
+
+	@Override
+	public Widget getDetailedMenu() {
+		if (detailedMenu == null || menuDirty) {
+			Widget menu = super.getDetailedMenu();
+
+			menu.adjustSize();
+
+			final Planet t = this;
+
+			// Cast to double so we get scientific notation.
+			Label orbitInfo = new Label("Orbit: "
+					+ (double) this.getOrbitRadius() + " km");
+			detailedMenu.add(orbitInfo);
+			orbitInfo.setSize(120, 33);
+			orbitInfo.setPosition(0, menu.getHeight());
+
+			Button plusOrbit = new Button("Increase Orbit");
+			plusOrbit.setTooltipContent("Increase orbit radius by 10%.");
+			plusOrbit.addCallback(new Runnable() {
+				@Override
+				public void run() {
+					t.setOrbitRadius((long) (t.getOrbitRadius() * 1.1));
+				}
+			});
+			detailedMenu.add(plusOrbit);
+			plusOrbit.setSize(100, 33);
+			plusOrbit.setPosition(orbitInfo.getWidth(), menu.getHeight());
+
+			Button minusOrbit = new Button("Decrease Orbit");
+			minusOrbit.setTooltipContent("Decrease orbit radius by 10%.");
+			minusOrbit.addCallback(new Runnable() {
+				@Override
+				public void run() {
+					t.setOrbitRadius((long) (t.getOrbitRadius() / 1.1));
+				}
+			});
+			detailedMenu.add(minusOrbit);
+			minusOrbit.setSize(100, 33);
+			minusOrbit.setPosition(orbitInfo.getWidth() + plusOrbit.getWidth(),
+					menu.getHeight());
+
+			return menu;
+		}
+		return detailedMenu;
 	}
 
 }
