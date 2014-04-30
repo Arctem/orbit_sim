@@ -56,6 +56,7 @@ public class MainMenu extends Widget {
 				SolarSystem newSystem = SolarSystem.load();
 				if (newSystem != null)
 					t.setSolarSystem(newSystem);
+				t.reinitializeSaveLoadButtons();
 			}
 		});
 
