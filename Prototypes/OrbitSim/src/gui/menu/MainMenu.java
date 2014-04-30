@@ -39,6 +39,15 @@ public class MainMenu extends Widget {
 	protected boolean handleEvent(Event e) {
 		boolean hitGUI = super.handleEvent(e);
 
+		System.out.println("event.");
+		if (e.getKeyChar() == '+' || e.getKeyChar() == '=') {
+			this.solarSystem.setTimeScale(2 * this.solarSystem.getTimeScale());
+		} else if (e.getKeyChar() == '-') {
+			this.solarSystem.setTimeScale(this.solarSystem.getTimeScale() / 2);
+		}
+
+		System.out.println(this.solarSystem.getTimeScale());
+
 		if (e.getMouseWheelDelta() != 0) {
 			Renderer.renderer.zoom(e.getMouseWheelDelta());
 		}
